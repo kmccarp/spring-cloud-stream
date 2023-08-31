@@ -47,7 +47,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class SubjectNamingStrategyTest {
 
-	private static StubSchemaRegistryClient stubSchemaRegistryClient = new StubSchemaRegistryClient();
+    private static final StubSchemaRegistryClient stubSchemaRegistryClient = new StubSchemaRegistryClient();
 
 	@Test
 	public void testQualifiedSubjectNamingStrategy() throws Exception {

@@ -186,7 +186,7 @@ public abstract class AbstractBinderTests<B extends AbstractTestBinder<? extends
 		binderBindUnbindLatency();
 
 		CountDownLatch latch = new CountDownLatch(1);
-		AtomicReference<Message<byte[]>> inboundMessageRef = new AtomicReference<Message<byte[]>>();
+		AtomicReference<Message<byte[]>> inboundMessageRef = new AtomicReference<>();
 		moduleInputChannel.subscribe(message1 -> {
 			try {
 				inboundMessageRef.set((Message<byte[]>) message1);
@@ -298,7 +298,7 @@ public abstract class AbstractBinderTests<B extends AbstractTestBinder<? extends
 				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.TEXT_PLAIN).build();
 		moduleOutputChannel.send(message);
 		CountDownLatch latch = new CountDownLatch(1);
-		AtomicReference<Message<byte[]>> inboundMessageRef = new AtomicReference<Message<byte[]>>();
+		AtomicReference<Message<byte[]>> inboundMessageRef = new AtomicReference<>();
 		moduleInputChannel.subscribe(message1 -> {
 			try {
 				inboundMessageRef.set((Message<byte[]>) message1);

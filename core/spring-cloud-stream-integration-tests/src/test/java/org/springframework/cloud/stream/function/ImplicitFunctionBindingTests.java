@@ -1267,9 +1267,7 @@ public class ImplicitFunctionBindingTests {
 
 		@Bean
 		public Function<Flux<String>, Flux<Message<String>>> addHeaders() {
-			return flux -> flux.map(value -> {
-				return MessageBuilder.withPayload(value).setHeader("foo", "bar").build();
-			});
+			return flux -> flux.map(value -> MessageBuilder.withPayload(value).setHeader("foo", "bar").build());
 		}
 
 		@Bean
@@ -1296,16 +1294,12 @@ public class ImplicitFunctionBindingTests {
 
 		@Bean
 		public Function<Object, String> imperative() {
-			return x -> {
-				return x.getClass().getSimpleName();
-			};
+			return x -> x.getClass().getSimpleName();
 		}
 
 		@Bean
 		public Function<Flux<Object>, Flux<String>> reactive() {
-			return flux -> flux.map(x -> {
-				return x.getClass().getSimpleName();
-			});
+			return flux -> flux.map(x -> x.getClass().getSimpleName());
 		}
 
 		@Bean
@@ -1408,7 +1402,7 @@ public class ImplicitFunctionBindingTests {
 		public Function<Flux<String>, Flux<String>> echo() {
 			return flux -> flux.map(value -> {
 				System.out.println("echo value reqctive " + value);
-				if (value.equals("error")) {
+				if ("error".equals(value)) {
 					throw new RuntimeException("intentional");
 				}
 				return value;
@@ -1445,9 +1439,7 @@ public class ImplicitFunctionBindingTests {
 	public static class SendToDestinationConfiguration {
 		@Bean
 		public Function<Flux<String>, Flux<Message<String>>> echo() {
-			return flux -> flux.map(v -> {
-				return MessageBuilder.withPayload(v).setHeader("spring.cloud.stream.sendto.destination", v).build();
-			});
+			return flux -> flux.map(v -> MessageBuilder.withPayload(v).setHeader("spring.cloud.stream.sendto.destination", v).build());
 		}
 	}
 
@@ -1508,7 +1500,7 @@ public class ImplicitFunctionBindingTests {
 
 		@Bean
 		public Supplier<Long> supplier() {
-			return () -> System.currentTimeMillis();
+			return System::currentTimeMillis;
 		}
 
 		@Bean
@@ -1537,9 +1529,7 @@ public class ImplicitFunctionBindingTests {
 
 		@Bean
 		public Function<Message<List<Map<String, String>>>, Message<List<Map<String, String>>>> funcB() {
-			return v -> {
-				return v;
-			};
+			return v -> v;
 		}
 	}
 
@@ -1680,9 +1670,7 @@ public class ImplicitFunctionBindingTests {
 
 		@Bean
 		public Consumer<String> consumerMultiple() {
-			return value -> {
-				System.out.println(value);
-			};
+			return System.out::println;
 		}
 	}
 

@@ -188,9 +188,9 @@ public class MultipleInputOutputFunctionTests {
 			int counter = 0;
 			for (int i = 0; i < 5; i++) {
 				Message<byte[]> even = outputDestination.receive(0, "singleInputMultipleOutputs-out-0");
-				assertThat(even.getPayload()).isEqualTo(("EVEN: " + String.valueOf(counter++)).getBytes());
+				assertThat(even.getPayload()).isEqualTo(("EVEN: " + counter++).getBytes());
 				Message<byte[]> odd = outputDestination.receive(0, "singleInputMultipleOutputs-out-1");
-				assertThat(odd.getPayload()).isEqualTo(("ODD: " + String.valueOf(counter++)).getBytes());
+				assertThat(odd.getPayload()).isEqualTo(("ODD: " + counter++).getBytes());
 			}
 		}
 	}
@@ -348,7 +348,7 @@ public class MultipleInputOutputFunctionTests {
 		@Bean
 		public  Function<Tuple2<Flux<Message<String>>, Flux<Message<Integer>>>, Flux<String>> multiInputSingleOutputMessage() {
 			return tuple -> {
-				Flux<String> stringStream = tuple.getT1().map(m -> m.getPayload());
+				Flux<String> stringStream = tuple.getT1().map(org.springframework.messaging.Message::getPayload);
 				Flux<String> intStream = tuple.getT2().map(i -> {
 					int v = i.getPayload();
 					return String.valueOf(v);
@@ -386,13 +386,11 @@ public class MultipleInputOutputFunctionTests {
 
 		@Bean
 		public Function<Tuple2<Flux<Person>, Flux<Employee>>, Flux<Person>> multiInputSingleOutput2() {
-			return tuple -> {
-				return Flux.merge(tuple.getT1(), tuple.getT2()).buffer(Duration.ofMillis(1000)).map(list -> {
+			return tuple -> Flux.merge(tuple.getT1(), tuple.getT2()).buffer(Duration.ofMillis(1000)).map(list -> {
 					String personName = ((Person) list.get(0)).getName();
 					String employeeName = ((Employee) list.get(1)).getName();
 					return new Person(personName + employeeName);
 				});
-			};
 		}
 
 		@Bean
@@ -409,8 +407,7 @@ public class MultipleInputOutputFunctionTests {
 				protected Object convertFromInternal(
 					Message<?> message, Class<?> targetClass, @Nullable Object conversionHint) {
 					String name = new String(((byte[]) message.getPayload()), StandardCharsets.UTF_8);
-					Person person = new Person(name);
-					return person;
+					return new Person(name);
 				}
 
 				@Override
@@ -437,8 +434,7 @@ public class MultipleInputOutputFunctionTests {
 				protected Object convertFromInternal(
 					Message<?> message, Class<?> targetClass, @Nullable Object conversionHint) {
 					String name = new String(((byte[]) message.getPayload()), StandardCharsets.UTF_8);
-					Employee person = new Employee(name);
-					return person;
+					return new Employee(name);
 				}
 
 				@Override

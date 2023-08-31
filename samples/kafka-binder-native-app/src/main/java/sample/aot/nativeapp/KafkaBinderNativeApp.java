@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sample.aot.nativeApp;
+package sample.aot.nativeapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

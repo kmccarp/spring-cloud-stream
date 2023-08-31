@@ -52,10 +52,10 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean;
  */
 public class KafkaStreamsBinderHealthIndicator extends AbstractHealthIndicator implements DisposableBean {
 
-	/**
-	 * Static initialization for detecting whether the application is using Kafka client 2.5 vs lower versions.
-	 */
-	private static ClassLoader CLASS_LOADER = KafkaStreamsBinderHealthIndicator.class.getClassLoader();
+    /**
+     * Static initialization for detecting whether the application is using Kafka client 2.5 vs lower versions.
+     */
+    private static final ClassLoader CLASS_LOADER = KafkaStreamsBinderHealthIndicator.class.getClassLoader();
 	private static boolean isKafkaStreams25 = true;
 	private static Method methodForIsRunning;
 
@@ -65,7 +65,7 @@ public class KafkaStreamsBinderHealthIndicator extends AbstractHealthIndicator i
 
 			Method[] declaredMethods = KAFKA_STREAMS_STATE_CLASS.getDeclaredMethods();
 			for (Method m : declaredMethods) {
-				if (m.getName().equals("isRunning")) {
+				if ("isRunning".equals(m.getName())) {
 					isKafkaStreams25 = false;
 					methodForIsRunning = m;
 				}

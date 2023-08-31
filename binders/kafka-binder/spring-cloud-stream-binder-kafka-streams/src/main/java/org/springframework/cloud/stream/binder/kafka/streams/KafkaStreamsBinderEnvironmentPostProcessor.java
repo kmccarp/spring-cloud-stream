@@ -43,7 +43,7 @@ public class KafkaStreamsBinderEnvironmentPostProcessor implements EnvironmentPo
 		String ineligibleDefinitionsPropertyKey = "spring.cloud.function.ineligible-definitions";
 		String ineligibleDefinitions = SEND_TO_DLQ_AND_CONTINUE_BEAN_NAME;
 		if (environment.getProperty(ineligibleDefinitionsPropertyKey) != null) {
-			ineligibleDefinitions += ("," + environment.getProperty(ineligibleDefinitionsPropertyKey));
+			ineligibleDefinitions += "," + environment.getProperty(ineligibleDefinitionsPropertyKey);
 		}
 		environment.getPropertySources().addFirst(new MapPropertySource(
 				"kafkaStreamsBinderIneligibleDefinitions",

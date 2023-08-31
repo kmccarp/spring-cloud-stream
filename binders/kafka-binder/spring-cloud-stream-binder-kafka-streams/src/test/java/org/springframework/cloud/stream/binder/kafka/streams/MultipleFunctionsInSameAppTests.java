@@ -218,8 +218,8 @@ public class MultipleFunctionsInSameAppTests {
 		@Bean
 		public Function<KStream<String, String>, KStream<String, String>[]> processItem() {
 			return input -> input.branch(
-					(s, p) -> p.equalsIgnoreCase("coffee"),
-					(s, p) -> p.equalsIgnoreCase("electronics"));
+					(s, p) -> "coffee".equalsIgnoreCase(p),
+					(s, p) -> "electronics".equalsIgnoreCase(p));
 		}
 
 		@Bean

@@ -211,7 +211,7 @@ class BinderChildContextInitializerTests {
 
 		@Bean
 		Consumer<String> fooSink() {
-			return (foo) -> LOG.info("*** FOO: " + foo);
+			return foo -> LOG.info("*** FOO: " + foo);
 		}
 	}
 

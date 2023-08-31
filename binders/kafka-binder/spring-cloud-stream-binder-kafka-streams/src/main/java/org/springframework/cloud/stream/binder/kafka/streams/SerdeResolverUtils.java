@@ -145,7 +145,7 @@ abstract class SerdeResolverUtils {
 		ResolvableType serdeType = ResolvableType.forClassWithGenerics(Serde.class, targetType);
 		String[] serdeBeanNames = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(context.getBeanFactory(),
 			serdeType, false, false);
-		Arrays.stream(serdeBeanNames).forEach((beanName) -> {
+		Arrays.stream(serdeBeanNames).forEach(beanName -> {
 			try {
 				BeanDefinition beanDefinition = context.getBeanFactory().getMergedBeanDefinition(beanName);
 				ResolvableType serdeBeanGeneric = beanDefinition.getResolvableType().getGeneric(0);

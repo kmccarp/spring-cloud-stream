@@ -163,10 +163,10 @@ public class KafkaBinderMetrics
 
 	private ToDoubleFunction<KafkaBinderMetrics> computeOffsetComputationFunction(String topic, String group) {
 		if (this.binderConfigurationProperties.getMetrics().isDefaultOffsetLagMetricsEnabled()) {
-			return (o) -> computeAndGetUnconsumedMessagesWithTimeout(topic, group);
+			return o -> computeAndGetUnconsumedMessagesWithTimeout(topic, group);
 		}
 		else {
-			return (o) -> lastUnconsumedMessagesValues.get(topic + "-" + group);
+			return o -> lastUnconsumedMessagesValues.get(topic + "-" + group);
 		}
 	}
 
@@ -200,7 +200,7 @@ public class KafkaBinderMetrics
 		long lag = 0;
 		Consumer<?, ?> metadataConsumer = metadataConsumers.computeIfAbsent(
 				group,
-				(g) -> createConsumerFactory().createConsumer(g, "monitoring"));
+				g -> createConsumerFactory().createConsumer(g, "monitoring"));
 		List<PartitionInfo> partitionInfos = metadataConsumer
 				.partitionsFor(topic);
 		List<TopicPartition> topicPartitions = new LinkedList<>();

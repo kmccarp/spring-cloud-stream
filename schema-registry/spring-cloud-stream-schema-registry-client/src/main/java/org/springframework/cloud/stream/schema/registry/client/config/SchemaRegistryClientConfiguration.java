@@ -45,11 +45,9 @@ public class SchemaRegistryClientConfiguration {
 			defaultSchemaRegistryClient.setEndpoint(schemaRegistryClientProperties.getEndpoint());
 		}
 
-		SchemaRegistryClient client = (schemaRegistryClientProperties.isCached())
+		return (schemaRegistryClientProperties.isCached())
 				? new CachingRegistryClient(defaultSchemaRegistryClient)
 				: defaultSchemaRegistryClient;
-
-		return client;
 	}
 
 }

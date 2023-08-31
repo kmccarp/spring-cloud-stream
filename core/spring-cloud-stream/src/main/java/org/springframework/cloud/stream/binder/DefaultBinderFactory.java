@@ -212,8 +212,7 @@ public class DefaultBinderFactory implements BinderFactory, DisposableBean, Appl
 		if (!MessageChannel.class.isAssignableFrom(bindingTargetType)
 				&& !PollableMessageSource.class.isAssignableFrom(bindingTargetType)) {
 			String bindingTargetTypeName = StringUtils.hasText(name) ? name : bindingTargetType.getSimpleName().toLowerCase();
-			Binder<T, ConsumerProperties, ProducerProperties> binderInstance = getBinderInstance(bindingTargetTypeName);
-			return binderInstance;
+			return getBinderInstance(bindingTargetTypeName);
 		}
 		String configurationName;
 		// Fall back to a default if no argument is provided
@@ -255,7 +254,7 @@ public class DefaultBinderFactory implements BinderFactory, DisposableBean, Appl
 								.put(bindingTargetType.getName(), configurationName);
 					}
 					else {
-						String countMsg = (candidatesForBindableType.size() == 0)
+						String countMsg = (candidatesForBindableType.isEmpty())
 								? "are no binders" : "is more than one binder";
 						throw new IllegalStateException(
 								"A default binder has been requested, but there "
@@ -512,7 +511,7 @@ public class DefaultBinderFactory implements BinderFactory, DisposableBean, Appl
 								binderProducingConversionService.addConverter((Converter<?, ?>) bean);
 							}
 							else {
-								toContext.registerBean(entry.getKey() + "_child", beanType, () -> entry.getValue());
+								toContext.registerBean(entry.getKey() + "_child", beanType, entry::getValue);
 							}
 						});
 					}

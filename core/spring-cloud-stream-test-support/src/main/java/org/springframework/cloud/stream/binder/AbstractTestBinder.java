@@ -42,7 +42,7 @@ public abstract class AbstractTestBinder<C extends AbstractBinder<MessageChannel
 
 	// @checkstyle:on
 
-	protected Set<String> queues = new HashSet<String>();
+	protected Set<String> queues = new HashSet<>();
 
 	private C binder;
 

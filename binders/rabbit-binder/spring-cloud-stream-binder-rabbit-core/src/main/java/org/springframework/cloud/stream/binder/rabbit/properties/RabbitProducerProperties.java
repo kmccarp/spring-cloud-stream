@@ -343,7 +343,7 @@ public class RabbitProducerProperties extends RabbitCommonProperties {
 		/**
 		 * Whether the exchange exists or should be provisioned.
 		 */
-		private boolean exists = false;
+		private boolean exists;
 
 		/**
 		 * The alternate exchange type.

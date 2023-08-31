@@ -53,7 +53,7 @@ public class BindingHandlerAdvise implements ConfigurationPropertiesBindHandlerA
 	public BindHandler apply(BindHandler bindHandler) {
 
 
-		BindHandler handler = new AbstractBindHandler(bindHandler) {
+		return new AbstractBindHandler(bindHandler) {
 			@Override
 			public <T> Bindable<T> onStart(ConfigurationPropertyName name,
 					Bindable<T> target, BindContext context) {
@@ -67,7 +67,6 @@ public class BindingHandlerAdvise implements ConfigurationPropertiesBindHandlerA
 				return bindHandler.onStart(name, target, context);
 			}
 		};
-		return handler;
 	}
 
 	private ConfigurationPropertyName getDefaultName(ConfigurationPropertyName name) {
@@ -75,8 +74,8 @@ public class BindingHandlerAdvise implements ConfigurationPropertiesBindHandlerA
 				.entrySet()) {
 			ConfigurationPropertyName from = mapping.getKey();
 			ConfigurationPropertyName to = mapping.getValue();
-			if ((from.isAncestorOf(name)
-					&& name.getNumberOfElements() > from.getNumberOfElements())) {
+			if (from.isAncestorOf(name)
+					&& name.getNumberOfElements() > from.getNumberOfElements()) {
 				ConfigurationPropertyName defaultName = to;
 				for (int i = from.getNumberOfElements() + 1; i < name
 						.getNumberOfElements(); i++) {

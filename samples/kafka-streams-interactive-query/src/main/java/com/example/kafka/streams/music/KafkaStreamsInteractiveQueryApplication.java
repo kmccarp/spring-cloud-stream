@@ -81,7 +81,7 @@ class KafkaStreamsInteractiveQueryApplication {
 
 		@Bean
 		public Consumer<KStream<Object, Product>> process() {
-			return (input) -> {
+			return input -> {
 				// Accept product events that are configured to be tracked
 				final KStream<Integer, Product> productsByProductId = input
 						.filter((key, product) -> productTrackerProperties.getProductIds().contains(product.id()))
