@@ -97,7 +97,7 @@ public class CompositeMessageConverterFactory {
 			}
 		};
 		resolver.setDefaultMimeType(BindingProperties.DEFAULT_CONTENT_TYPE);
-		this.converters.stream().filter(mc -> mc instanceof AbstractMessageConverter)
+		this.converters.stream().filter(AbstractMessageConverter.class::isInstance)
 				.forEach(mc -> ((AbstractMessageConverter) mc)
 						.setContentTypeResolver(resolver));
 	}
@@ -123,7 +123,7 @@ public class CompositeMessageConverterFactory {
 			@Override
 			protected boolean supports(Class<?> clazz) {
 				if (!super.supports(clazz)) {
-					return (Object.class == clazz);
+					return Object.class == clazz;
 				}
 				return true;
 			}

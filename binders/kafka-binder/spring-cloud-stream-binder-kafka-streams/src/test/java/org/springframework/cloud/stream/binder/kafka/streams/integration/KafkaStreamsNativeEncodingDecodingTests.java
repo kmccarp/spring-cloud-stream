@@ -125,7 +125,7 @@ public abstract class KafkaStreamsNativeEncodingDecodingTests {
 			template.sendDefault("foobar");
 			ConsumerRecord<String, String> cr = KafkaTestUtils.getSingleRecord(consumer,
 					"decode-counts-1");
-			assertThat(cr.value().equals("Count for foobar : 1")).isTrue();
+			assertThat("Count for foobar : 1".equals(cr.value())).isTrue();
 
 			verify(conversionDelegate, never()).serializeOnOutbound(any(KStream.class));
 			verify(conversionDelegate, never()).deserializeOnInbound(any(Class.class),
@@ -164,7 +164,7 @@ public abstract class KafkaStreamsNativeEncodingDecodingTests {
 			final Header fooHeader = foo.iterator().next();
 			assertThat(fooHeader.value()).isEqualTo("bar".getBytes(StandardCharsets.UTF_8));
 
-			assertThat(cr.value().equals("Count for foobar : 1")).isTrue();
+			assertThat("Count for foobar : 1".equals(cr.value())).isTrue();
 
 			verify(conversionDelegate).serializeOnOutbound(any(KStream.class));
 			verify(conversionDelegate).deserializeOnInbound(any(Class.class),

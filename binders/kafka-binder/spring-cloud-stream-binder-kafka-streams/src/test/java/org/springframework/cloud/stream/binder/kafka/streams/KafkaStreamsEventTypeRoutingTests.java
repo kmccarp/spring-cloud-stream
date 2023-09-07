@@ -63,7 +63,7 @@ public class KafkaStreamsEventTypeRoutingTests {
 
 	private static Consumer<Integer, Foo> consumer;
 
-	private static CountDownLatch LATCH = new CountDownLatch(3);
+	private static CountDownLatch latch = new CountDownLatch(3);
 
 	@BeforeAll
 	public static void setUp() {
@@ -200,7 +200,7 @@ public class KafkaStreamsEventTypeRoutingTests {
 				final ProducerRecord<Integer, Foo> producerRecord4 = new ProducerRecord<>("foo-consumer-1", 0, 59, foo4, headers1);
 				template.send(producerRecord4);
 
-				Assert.isTrue(LATCH.await(10, TimeUnit.SECONDS), "Foo");
+				Assert.isTrue(latch.await(10, TimeUnit.SECONDS), "Foo");
 			}
 			finally {
 				pf.destroy();
@@ -219,7 +219,7 @@ public class KafkaStreamsEventTypeRoutingTests {
 		@Bean
 		public java.util.function.Consumer<KTable<Integer, Foo>> consumer() {
 				return ktable -> ktable.toStream().foreach((key, value) -> {
-					LATCH.countDown();
+					latch.countDown();
 				});
 		}
 

@@ -328,7 +328,7 @@ public class ReactorKafkaBinder
 					if (autoCommit) {
 						fluxes.add(kafkaReceiver
 								.receiveAutoAck()
-								.map(inner -> new GenericMessage<>(inner)));
+								.map(GenericMessage::new));
 					}
 					else {
 						fluxes.add(receive

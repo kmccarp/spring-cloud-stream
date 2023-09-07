@@ -52,7 +52,7 @@ public class PollerConfigEnvironmentPostProcessor implements EnvironmentPostProc
 
 		for (String pollerPropertySuffix : pollerPropertySuffixes) {
 			map.from(environment.getProperty(STREAM_PROPERTY_PREFIX + pollerPropertySuffix))
-				.to((value) -> streamPollerProperties.put(INTEGRATION_PROPERTY_PREFIX + pollerPropertySuffix, value));
+				.to(value -> streamPollerProperties.put(INTEGRATION_PROPERTY_PREFIX + pollerPropertySuffix, value));
 		}
 
 		if (!streamPollerProperties.isEmpty()) {

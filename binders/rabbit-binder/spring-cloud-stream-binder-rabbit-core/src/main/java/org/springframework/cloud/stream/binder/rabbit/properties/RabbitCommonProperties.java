@@ -54,17 +54,17 @@ public abstract class RabbitCommonProperties {
 	/**
 	 * whether to declare the exchange as auto-delete.
 	 */
-	private boolean exchangeAutoDelete = false;
+	private boolean exchangeAutoDelete;
 
 	/**
 	 * whether a delayed message exchange should be used.
 	 */
-	private boolean delayedExchange = false;
+	private boolean delayedExchange;
 
 	/**
 	 * set to true to name the queue with only the group; default is destination.group.
 	 */
-	private boolean queueNameGroupOnly = false;
+	private boolean queueNameGroupOnly;
 
 	/**
 	 * whether to bind a queue (or queues when partitioned) to the exchange.

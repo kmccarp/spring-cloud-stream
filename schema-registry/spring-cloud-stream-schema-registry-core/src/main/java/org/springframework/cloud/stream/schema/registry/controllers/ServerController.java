@@ -104,9 +104,7 @@ public class ServerController {
 		headers.add(HttpHeaders.LOCATION, builder.path("/{subject}/{format}/v{version}")
 				.buildAndExpand(result.getSubject(), result.getFormat(), result.getVersion())
 				.toString());
-		ResponseEntity<Schema> response = new ResponseEntity<>(result, headers, HttpStatus.CREATED);
-
-		return response;
+		return new ResponseEntity<>(result, headers, HttpStatus.CREATED);
 
 	}
 

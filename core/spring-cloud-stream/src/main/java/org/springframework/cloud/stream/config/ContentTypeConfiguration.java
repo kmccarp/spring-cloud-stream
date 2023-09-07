@@ -48,7 +48,7 @@ class ContentTypeConfiguration {
 			List<MessageConverter> customMessageConverters, @Nullable JsonMapper jsonMapper) {
 
 		customMessageConverters = customMessageConverters.stream()
-				.filter(c -> isConverterEligible(c)).collect(Collectors.toList());
+				.filter(this::isConverterEligible).collect(Collectors.toList());
 
 		CompositeMessageConverterFactory factory =
 				new CompositeMessageConverterFactory(customMessageConverters, objectMapperObjectProvider.getIfAvailable(ObjectMapper::new), jsonMapper);

@@ -72,7 +72,7 @@ public class DefaultPollableMessageSource
 
 	private static final Log log = LogFactory.getLog(DefaultPollableMessageSource.class);
 
-	protected static final ThreadLocal<AttributeAccessor> attributesHolder = new ThreadLocal<AttributeAccessor>();
+	protected static final ThreadLocal<AttributeAccessor> attributesHolder = new ThreadLocal<>();
 
 	private static final DirectChannel dummyChannel = new DirectChannel();
 

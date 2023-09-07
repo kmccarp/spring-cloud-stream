@@ -81,8 +81,8 @@ public class KafkaStreamsFunctionProcessor extends AbstractKafkaStreamsBinderPro
 	private final KafkaStreamsMessageConversionDelegate kafkaStreamsMessageConversionDelegate;
 
 	private BeanFactory beanFactory;
-	private StreamFunctionProperties streamFunctionProperties;
-	private KafkaStreamsBinderConfigurationProperties kafkaStreamsBinderConfigurationProperties;
+    private final StreamFunctionProperties streamFunctionProperties;
+    private final KafkaStreamsBinderConfigurationProperties kafkaStreamsBinderConfigurationProperties;
 	StreamsBuilderFactoryBeanConfigurer customizer;
 	ConfigurableEnvironment environment;
 

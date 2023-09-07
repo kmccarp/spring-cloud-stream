@@ -222,7 +222,7 @@ public class FunctionBatchingTests {
 	public static class ListStringPayloadConfiguration {
 		@Bean
 		public Function<List<String>, String> func() {
-			return x -> x.toString();
+			return Object::toString;
 		}
 	}
 
@@ -230,7 +230,7 @@ public class FunctionBatchingTests {
 	public static class ListObjectPayloadConfiguration {
 		@Bean
 		public Function<List<Object>, String> func() {
-			return x -> x.toString();
+			return Object::toString;
 		}
 	}
 

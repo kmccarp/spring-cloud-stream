@@ -116,7 +116,7 @@ public class RabbitBinderCleanerTests {
 		rabbitAdmin.declareExchange(topic2);
 		rabbitAdmin.declareBinding(
 				BindingBuilder.bind(new Queue(firstQueue)).to(topic2).with("#"));
-		new RabbitTemplate(connectionFactory).execute(new ChannelCallback<Void>() {
+		new RabbitTemplate(connectionFactory).execute(new ChannelCallback<>() {
 
 			@Override
 			public Void doInRabbit(Channel channel) throws Exception {

@@ -42,6 +42,6 @@ public enum DeserializationExceptionHandler {
 	/**
 	 * Deserialization error handler that silently skips the error and continue.
 	 */
-	skipAndContinue;
+	skipAndContinue
 
 }

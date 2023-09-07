@@ -68,7 +68,7 @@ public class AbstractBindableProxyFactory implements Bindable {
 				.get(candidateBindingTargetFactories.get(0));
 		}
 		else {
-			if (candidateBindingTargetFactories.size() == 0) {
+			if (candidateBindingTargetFactories.isEmpty()) {
 				throw new IllegalStateException(
 					"No factory found for binding target type: "
 						+ bindingTargetType.getName()

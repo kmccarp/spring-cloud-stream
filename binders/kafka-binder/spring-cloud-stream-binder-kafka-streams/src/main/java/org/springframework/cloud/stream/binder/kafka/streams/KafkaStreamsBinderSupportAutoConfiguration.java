@@ -109,9 +109,9 @@ public class KafkaStreamsBinderSupportAutoConfiguration {
 				.entrySet()) {
 			final BinderConfiguration binderConfiguration = entry.getValue();
 			final String binderType = binderConfiguration.getBinderType();
-			if (binderType != null && (binderType.equals(KSTREAM_BINDER_TYPE)
+			if (binderType != null && binderType.equals(KSTREAM_BINDER_TYPE)
 					|| binderType.equals(KTABLE_BINDER_TYPE)
-					|| binderType.equals(GLOBALKTABLE_BINDER_TYPE))) {
+					|| binderType.equals(GLOBALKTABLE_BINDER_TYPE)) {
 				Map<String, Object> binderProperties = new HashMap<>();
 				this.flatten(null, binderConfiguration.getProperties(), binderProperties);
 				environment.getPropertySources().addFirst(
@@ -192,7 +192,7 @@ public class KafkaStreamsBinderSupportAutoConfiguration {
 
 		String kafkaConnectionString = configProperties.getKafkaConnectionString();
 
-		if (kafkaConnectionString != null && kafkaConnectionString.equals("localhost:9092")) {
+		if ("localhost:9092".equals(kafkaConnectionString)) {
 			//Making sure that the application indeed set a property.
 			String kafkaStreamsBinderBroker = environment.getProperty("spring.cloud.stream.kafka.streams.binder.brokers");
 
@@ -215,7 +215,7 @@ public class KafkaStreamsBinderSupportAutoConfiguration {
 			Object bootstrapServerConfig = properties
 					.get(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG);
 			if (bootstrapServerConfig instanceof String bootStrapServers) {
-				if (bootStrapServers.equals("localhost:9092")) {
+				if ("localhost:9092".equals(bootStrapServers)) {
 					properties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG,
 							kafkaConnectionString);
 				}
@@ -276,7 +276,7 @@ public class KafkaStreamsBinderSupportAutoConfiguration {
 					(int) configProperties.getReplicationFactor());
 		}
 		return properties.entrySet().stream().collect(
-				Collectors.toMap((e) -> String.valueOf(e.getKey()), Map.Entry::getValue));
+				Collectors.toMap(e -> String.valueOf(e.getKey()), Map.Entry::getValue));
 	}
 
 	private void addPrefix(Properties properties, Map<String, Object> mergedConsProdConfig, String prefix) {

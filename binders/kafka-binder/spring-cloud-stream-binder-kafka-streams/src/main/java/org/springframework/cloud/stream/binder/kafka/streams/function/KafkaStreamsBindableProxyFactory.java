@@ -71,9 +71,9 @@ public class KafkaStreamsBindableProxyFactory extends AbstractBindableProxyFacto
 	@Autowired
 	private StreamFunctionProperties streamFunctionProperties;
 
-	private ResolvableType[] types;
+    private final ResolvableType[] types;
 
-	private Method method;
+    private final Method method;
 
 	private final String functionName;
 
@@ -253,7 +253,7 @@ public class KafkaStreamsBindableProxyFactory extends AbstractBindableProxyFacto
 	@Override
 	public Set<String> getInputs() {
 		Set<String> ins = new LinkedHashSet<>();
-		this.inputHolders.forEach((s, BoundTargetHolder) -> ins.add(s));
+		this.inputHolders.forEach((s, boundTargetHolder) -> ins.add(s));
 		return ins;
 	}
 

@@ -501,7 +501,7 @@ public class SchemaRegistryServerAvroTests {
 
 				ResponseEntity<List<Schema>> findBySubjectFormatResponse = this.client.exchange(
 						this.serverControllerUri.resolve("/" + subject + "/" + format), HttpMethod.GET, null,
-						new ParameterizedTypeReference<List<Schema>>() {
+						new ParameterizedTypeReference<>() {
 						});
 
 				assertThat(findBySubjectFormatResponse.getStatusCode().is2xxSuccessful()).isTrue();

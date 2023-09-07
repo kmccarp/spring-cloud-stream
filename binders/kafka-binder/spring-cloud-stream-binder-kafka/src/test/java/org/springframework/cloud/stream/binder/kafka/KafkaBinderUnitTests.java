@@ -83,7 +83,7 @@ public class KafkaBinderUnitTests {
 		KafkaMessageChannelBinder binder = new KafkaMessageChannelBinder(
 				binderConfigurationProperties, provisioningProvider);
 		KafkaConsumerProperties consumerProps = new KafkaConsumerProperties();
-		ExtendedConsumerProperties<KafkaConsumerProperties> ecp = new ExtendedConsumerProperties<KafkaConsumerProperties>(
+		ExtendedConsumerProperties<KafkaConsumerProperties> ecp = new ExtendedConsumerProperties<>(
 				consumerProps);
 		Method method = KafkaMessageChannelBinder.class.getDeclaredMethod(
 				"createKafkaConsumerFactory", boolean.class, String.class,
@@ -190,11 +190,9 @@ public class KafkaBinderUnitTests {
 		given(provisioningProvider.provisionConsumerDestination(anyString(), anyString(),
 				any())).willReturn(dest);
 		final AtomicInteger part = new AtomicInteger();
-		willAnswer(i -> {
-			return partitions.stream().map(p -> new PartitionInfo(topic,
+		willAnswer(i -> partitions.stream().map(p -> new PartitionInfo(topic,
 					part.getAndIncrement(), null, null, null))
-					.collect(Collectors.toList());
-		}).given(provisioningProvider).getPartitionsForTopic(anyInt(), anyBoolean(),
+					.collect(Collectors.toList())).given(provisioningProvider).getPartitionsForTopic(anyInt(), anyBoolean(),
 				any(), any());
 		@SuppressWarnings("unchecked")
 		final Consumer<byte[], byte[]> consumer = mock(Consumer.class);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springframework.cloud.stream.schema.registry.entityScanning;
+package org.springframework.cloud.stream.schema.registry.entityscanning;
 
 import org.junit.jupiter.api.BeforeEach;
 

@@ -117,7 +117,7 @@ public final class StreamBridge implements StreamOperations, SmartInitializingSi
 		this.applicationContext = applicationContext;
 		this.bindingServiceProperties = bindingServiceProperties;
 		this.destinationBindingCallback = destinationBindingCallback;
-		this.channelCache = new LinkedHashMap<String, MessageChannel>() {
+		this.channelCache = new LinkedHashMap<>() {
 			@Override
 			protected boolean removeEldestEntry(Map.Entry<String, MessageChannel> eldest) {
 				boolean remove = size() > bindingServiceProperties.getDynamicDestinationCacheSize();
@@ -178,7 +178,7 @@ public final class StreamBridge implements StreamOperations, SmartInitializingSi
 		}
 
 		if (resultMessage == null
-			&& ((Message) messageToSend).getPayload().getClass().getName().equals("org.springframework.kafka.support.KafkaNull")) {
+			&& "org.springframework.kafka.support.KafkaNull".equals(((Message) messageToSend).getPayload().getClass().getName())) {
 			resultMessage = messageToSend;
 		}
 
@@ -188,12 +188,10 @@ public final class StreamBridge implements StreamOperations, SmartInitializingSi
 	}
 
 	private int hashProducerProperties(ProducerProperties producerProperties, String outputContentType) {
-		int hash = outputContentType.hashCode()
+		return outputContentType.hashCode()
 				+ Boolean.hashCode(producerProperties.isUseNativeEncoding())
 				+ Boolean.hashCode(producerProperties.isPartitioned())
 				+ producerProperties.getPartitionCount();
-
-		return hash;
 	}
 
 	private synchronized FunctionInvocationWrapper getStreamBridgeFunction(String outputContentType, ProducerProperties producerProperties) {
@@ -202,7 +200,7 @@ public final class StreamBridge implements StreamOperations, SmartInitializingSi
 			return this.streamBridgeFunctionCache.get(streamBridgeFunctionKey);
 		}
 		else {
-			FunctionInvocationWrapper functionToInvoke = this.functionCatalog.lookup(STREAM_BRIDGE_FUNC_NAME, outputContentType.toString());
+			FunctionInvocationWrapper functionToInvoke = this.functionCatalog.lookup(STREAM_BRIDGE_FUNC_NAME, outputContentType);
 			this.streamBridgeFunctionCache.put(streamBridgeFunctionKey, functionToInvoke);
 			functionToInvoke.setSkipOutputConversion(producerProperties.isUseNativeEncoding());
 			return functionToInvoke;
@@ -282,8 +280,7 @@ public final class StreamBridge implements StreamOperations, SmartInitializingSi
 		String binderConfigurationName = binderName != null ? binderName : this.bindingServiceProperties
 				.getBinder(channelName);
 		Binder<?, ?, ?> binder = binderFactory.getBinder(binderConfigurationName, bindableType);
-		String targetProtocol = binder.getClass().getSimpleName().startsWith("Rabbit") ? "amqp" : "kafka";
-		return targetProtocol;
+		return binder.getClass().getSimpleName().startsWith("Rabbit") ? "amqp" : "kafka";
 	}
 
 	private void addInterceptors(AbstractMessageChannel messageChannel, String destinationName) {
