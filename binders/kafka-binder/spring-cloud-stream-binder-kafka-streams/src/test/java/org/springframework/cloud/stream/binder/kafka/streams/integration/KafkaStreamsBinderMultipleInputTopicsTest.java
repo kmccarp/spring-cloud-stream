@@ -134,7 +134,7 @@ public class KafkaStreamsBinderMultipleInputTopicsTest {
 		List<String> wordCounts = new ArrayList<>(2);
 
 		received.records("counts")
-				.forEach((consumerRecord) -> wordCounts.add((consumerRecord.value())));
+				.forEach(consumerRecord -> wordCounts.add((consumerRecord.value())));
 		System.out.println(wordCounts);
 		assertThat(wordCounts.contains("{\"word\":\"foobar1\",\"count\":1}")).isTrue();
 		assertThat(wordCounts.contains("{\"word\":\"foobar2\",\"count\":1}")).isTrue();

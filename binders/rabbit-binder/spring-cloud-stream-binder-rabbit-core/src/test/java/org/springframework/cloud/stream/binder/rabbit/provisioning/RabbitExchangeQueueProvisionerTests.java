@@ -72,7 +72,7 @@ public class RabbitExchangeQueueProvisionerTests {
 		RabbitConsumerProperties props = new RabbitConsumerProperties();
 		props.setAutoBindDlq(true);
 		ExtendedConsumerProperties<RabbitConsumerProperties> properties =
-				new ExtendedConsumerProperties<RabbitConsumerProperties>(props);
+				new ExtendedConsumerProperties<>(props);
 		ConsumerDestination dest = provisioner.provisionConsumerDestination("foo", "group", properties);
 		ApplicationContext ctx =
 				TestUtils.getPropertyValue(provisioner, "autoDeclareContext", ApplicationContext.class);
@@ -98,7 +98,7 @@ public class RabbitExchangeQueueProvisionerTests {
 		props.setAutoBindDlq(true);
 		props.setQueueNameGroupOnly(true);
 		ExtendedConsumerProperties<RabbitConsumerProperties> properties =
-				new ExtendedConsumerProperties<RabbitConsumerProperties>(props);
+				new ExtendedConsumerProperties<>(props);
 		ConsumerDestination dest = provisioner.provisionConsumerDestination("fiz", "group", properties);
 		ApplicationContext ctx =
 				TestUtils.getPropertyValue(provisioner, "autoDeclareContext", ApplicationContext.class);
@@ -122,7 +122,7 @@ public class RabbitExchangeQueueProvisionerTests {
 
 		RabbitProducerProperties props = new RabbitProducerProperties();
 		ExtendedProducerProperties<RabbitProducerProperties> properties =
-				new ExtendedProducerProperties<RabbitProducerProperties>(props);
+				new ExtendedProducerProperties<>(props);
 		ProducerDestination dest = provisioner.provisionProducerDestination("bar", properties);
 		ApplicationContext ctx =
 				TestUtils.getPropertyValue(provisioner, "autoDeclareContext", ApplicationContext.class);
@@ -147,7 +147,7 @@ public class RabbitExchangeQueueProvisionerTests {
 		alternate.setName("altEx");
 		props.setAlternateExchange(alternate);
 		ExtendedProducerProperties<RabbitProducerProperties> properties =
-				new ExtendedProducerProperties<RabbitProducerProperties>(props);
+				new ExtendedProducerProperties<>(props);
 		ProducerDestination dest = provisioner.provisionProducerDestination("withAlt", properties);
 		ApplicationContext ctx =
 				TestUtils.getPropertyValue(provisioner, "autoDeclareContext", ApplicationContext.class);
@@ -187,7 +187,7 @@ public class RabbitExchangeQueueProvisionerTests {
 		alternate.setBinding(binding);
 		props.setAlternateExchange(alternate);
 		ExtendedProducerProperties<RabbitProducerProperties> properties =
-				new ExtendedProducerProperties<RabbitProducerProperties>(props);
+				new ExtendedProducerProperties<>(props);
 		ProducerDestination dest = provisioner.provisionProducerDestination("withAlt", properties);
 		ApplicationContext ctx =
 				TestUtils.getPropertyValue(provisioner, "autoDeclareContext", ApplicationContext.class);
@@ -230,7 +230,7 @@ public class RabbitExchangeQueueProvisionerTests {
 		RabbitProducerProperties props = new RabbitProducerProperties();
 		props.setAutoBindDlq(true);
 		ExtendedProducerProperties<RabbitProducerProperties> properties =
-				new ExtendedProducerProperties<RabbitProducerProperties>(props);
+				new ExtendedProducerProperties<>(props);
 		properties.setRequiredGroups("group1", "group2");
 		ProducerDestination dest = provisioner.provisionProducerDestination("baz", properties);
 		ApplicationContext ctx =
@@ -258,7 +258,7 @@ public class RabbitExchangeQueueProvisionerTests {
 		RabbitProducerProperties props = new RabbitProducerProperties();
 		props.setAutoBindDlq(true);
 		ExtendedProducerProperties<RabbitProducerProperties> properties =
-				new ExtendedProducerProperties<RabbitProducerProperties>(props);
+				new ExtendedProducerProperties<>(props);
 		properties.setRequiredGroups("group1", "group2");
 		properties.setPartitionKeyExpression(new LiteralExpression("foo"));
 		properties.setPartitionCount(2);
@@ -291,7 +291,7 @@ public class RabbitExchangeQueueProvisionerTests {
 		props.setAutoBindDlq(true);
 		props.setQueueNameGroupOnly(true);
 		ExtendedProducerProperties<RabbitProducerProperties> properties =
-				new ExtendedProducerProperties<RabbitProducerProperties>(props);
+				new ExtendedProducerProperties<>(props);
 		properties.setRequiredGroups("group1", "group2");
 		properties.setPartitionKeyExpression(new LiteralExpression("foo"));
 		properties.setPartitionCount(2);

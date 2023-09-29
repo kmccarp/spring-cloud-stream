@@ -81,8 +81,8 @@ public class KafkaStreamsFunctionProcessor extends AbstractKafkaStreamsBinderPro
 	private final KafkaStreamsMessageConversionDelegate kafkaStreamsMessageConversionDelegate;
 
 	private BeanFactory beanFactory;
-	private StreamFunctionProperties streamFunctionProperties;
-	private KafkaStreamsBinderConfigurationProperties kafkaStreamsBinderConfigurationProperties;
+    private final StreamFunctionProperties streamFunctionProperties;
+    private final KafkaStreamsBinderConfigurationProperties kafkaStreamsBinderConfigurationProperties;
 	StreamsBuilderFactoryBeanConfigurer customizer;
 	ConfigurableEnvironment environment;
 
@@ -534,7 +534,7 @@ public class KafkaStreamsFunctionProcessor extends AbstractKafkaStreamsBinderPro
 
 						if (KStream.class.isAssignableFrom(stringResolvableTypeMap.get(input).getRawClass())) {
 							final Class<?> valueClass =
-									(stringResolvableTypeMap.get(input).getGeneric(1).getRawClass() != null)
+									stringResolvableTypeMap.get(input).getGeneric(1).getRawClass() != null
 									? (stringResolvableTypeMap.get(input).getGeneric(1).getRawClass()) : Object.class;
 							if (this.kafkaStreamsBindingInformationCatalogue.isUseNativeDecoding(
 									(KStream<?, ?>) kStreamWrapper)) {

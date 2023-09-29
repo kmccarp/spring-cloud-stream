@@ -57,8 +57,8 @@ public class KafkaStreamsRetryTests {
 
 	private static final EmbeddedKafkaBroker embeddedKafka = EmbeddedKafkaCondition.getBroker();
 
-	private final static CountDownLatch LATCH1 = new CountDownLatch(2);
-	private final static CountDownLatch LATCH2 = new CountDownLatch(4);
+	private static final CountDownLatch LATCH1 = new CountDownLatch(2);
+	private static final CountDownLatch LATCH2 = new CountDownLatch(4);
 
 	@Test
 	void testRetryTemplatePerBindingOnKStream() throws Exception {

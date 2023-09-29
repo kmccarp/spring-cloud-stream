@@ -206,7 +206,7 @@ public class RabbitBinderTests extends
 		ExtendedProducerProperties<RabbitProducerProperties> props = new ExtendedProducerProperties<>(
 				new RabbitProducerProperties());
 
-		if (testInfo.getTestMethod().get().getName().equals("testPartitionedModuleSpEL")) {
+		if ("testPartitionedModuleSpEL".equals(testInfo.getTestMethod().get().getName())) {
 			props.getExtension().setRoutingKeyExpression(
 					spelExpressionParser.parseExpression("'part.0'"));
 		}
@@ -223,7 +223,7 @@ public class RabbitBinderTests extends
 		RabbitTestBinder binder = getBinder();
 		final AtomicReference<AsyncConsumerStartedEvent> event = new AtomicReference<>();
 		binder.getApplicationContext().addApplicationListener(
-				(ApplicationListener<AsyncConsumerStartedEvent>) e -> event.set(e));
+				(ApplicationListener<AsyncConsumerStartedEvent>) event::set);
 		DirectChannel moduleOutputChannel = createBindableChannel("output",
 				new BindingProperties());
 		DirectChannel moduleInputChannel = createBindableChannel("input",
@@ -895,9 +895,9 @@ public class RabbitBinderTests extends
 
 		ExtendedProducerProperties<RabbitProducerProperties> producerProperties = createProducerProperties(testInfo);
 		this.applicationContext.registerBean("pkExtractor",
-				TestPartitionKeyExtractorClass.class, () -> new TestPartitionKeyExtractorClass());
+				TestPartitionKeyExtractorClass.class, TestPartitionKeyExtractorClass::new);
 		this.applicationContext.registerBean("pkSelector",
-				TestPartitionSelectorClass.class, () -> new TestPartitionSelectorClass());
+				TestPartitionSelectorClass.class, TestPartitionSelectorClass::new);
 		producerProperties.setPartitionKeyExtractorName("pkExtractor");
 		producerProperties.setPartitionSelectorName("pkSelector");
 		producerProperties.getExtension().setPrefix("foo.");
@@ -1221,8 +1221,8 @@ public class RabbitBinderTests extends
 
 		ExtendedProducerProperties<RabbitProducerProperties> producerProperties = createProducerProperties(testInfo);
 		producerProperties.getExtension().setPrefix("bindertest.");
-		this.applicationContext.registerBean("pkExtractor", PartitionTestSupport.class, () -> new PartitionTestSupport());
-		this.applicationContext.registerBean("pkSelector", PartitionTestSupport.class, () -> new PartitionTestSupport());
+		this.applicationContext.registerBean("pkExtractor", PartitionTestSupport.class, PartitionTestSupport::new);
+		this.applicationContext.registerBean("pkSelector", PartitionTestSupport.class, PartitionTestSupport::new);
 		producerProperties.getExtension().setAutoBindDlq(true);
 		producerProperties.setPartitionKeyExtractorName("pkExtractor");
 		producerProperties.setPartitionSelectorName("pkSelector");
@@ -1344,8 +1344,8 @@ public class RabbitBinderTests extends
 		ExtendedProducerProperties<RabbitProducerProperties> producerProperties = createProducerProperties(testInfo);
 		producerProperties.getExtension().setPrefix("bindertest.");
 		producerProperties.getExtension().setAutoBindDlq(true);
-		this.applicationContext.registerBean("pkExtractor", PartitionTestSupport.class, () -> new PartitionTestSupport());
-		this.applicationContext.registerBean("pkSelector", PartitionTestSupport.class, () -> new PartitionTestSupport());
+		this.applicationContext.registerBean("pkExtractor", PartitionTestSupport.class, PartitionTestSupport::new);
+		this.applicationContext.registerBean("pkSelector", PartitionTestSupport.class, PartitionTestSupport::new);
 		producerProperties.setPartitionKeyExtractorName("pkExtractor");
 		producerProperties.setPartitionSelectorName("pkSelector");
 		producerProperties.setPartitionCount(2);
@@ -1466,7 +1466,7 @@ public class RabbitBinderTests extends
 		properties.getExtension().setPrefix("bindertest.");
 		properties.getExtension().setAutoBindDlq(true);
 		properties.setRequiredGroups("dlqPartGrp");
-		this.applicationContext.registerBean("pkExtractor", PartitionTestSupport.class, () -> new PartitionTestSupport());
+		this.applicationContext.registerBean("pkExtractor", PartitionTestSupport.class, PartitionTestSupport::new);
 		properties.setPartitionKeyExtractorName("pkExtractor");
 		properties.setPartitionSelectorName("pkExtractor");
 		properties.setPartitionCount(2);
@@ -1623,7 +1623,7 @@ public class RabbitBinderTests extends
 		assertThat(deadLetter).isNotNull();
 		assertThat(new String(deadLetter.getBody())).isEqualTo("bar");
 		assertThat(deadLetter.getMessageProperties().getHeaders())
-				.containsKey(("x-exception-stacktrace"));
+				.containsKey("x-exception-stacktrace");
 
 		dontRepublish.set(true);
 		template.convertAndSend("", TEST_PREFIX + "foo.dlqpubtest2.foo", "baz");
@@ -1827,7 +1827,7 @@ public class RabbitBinderTests extends
 
 		ArgumentCaptor<Object> captor = ArgumentCaptor.forClass(Object.class);
 		verify(logger).trace(captor.capture());
-		assertThat(captor.getValue().toString()).contains(("Compressed 14 to "));
+		assertThat(captor.getValue().toString()).contains("Compressed 14 to ");
 
 		QueueChannel input = new QueueChannel();
 		input.setBeanName("batchingConsumer");

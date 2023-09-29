@@ -34,7 +34,7 @@ public class CachingRegistryClient implements SchemaRegistryClient {
 
 	private static final String REF_CACHE = CACHE_PREFIX + ".schemaByReferenceCache";
 
-	private SchemaRegistryClient delegate;
+    private final SchemaRegistryClient delegate;
 
 	@Autowired
 	private CacheManager cacheManager;

@@ -112,7 +112,7 @@ public class PulsarMessageChannelBinder extends
 		var layeredProducerProps = PulsarBinderUtils.mergeModifiedProducerProperties(
 				this.binderConfigProps.getProducer(), producerProperties.getExtension());
 		var handler = new PulsarProducerConfigurationMessageHandler(this.pulsarTemplate, schema, destination.getName(),
-				(builder) -> ProducerBuilderConfigurationUtil.loadConf(builder, layeredProducerProps),
+				builder -> ProducerBuilderConfigurationUtil.loadConf(builder, layeredProducerProps),
 				determineOutboundHeaderMapper(producerProperties));
 		handler.setApplicationContext(getApplicationContext());
 		handler.setBeanFactory(getBeanFactory());
@@ -139,7 +139,7 @@ public class PulsarMessageChannelBinder extends
 
 		var messageDrivenChannelAdapter = new PulsarMessageDrivenChannelAdapter();
 		containerProperties.setMessageListener((PulsarRecordMessageListener<?>) (consumer, pulsarMsg) -> {
-			var springMessage = (inboundHeaderMapper != null)
+			var springMessage = inboundHeaderMapper != null
 					? MessageBuilder.createMessage(pulsarMsg.getValue(), inboundHeaderMapper.toSpringHeaders(pulsarMsg))
 					: MessageBuilder.withPayload(pulsarMsg.getValue()).build();
 			messageDrivenChannelAdapter.send(springMessage);
@@ -296,7 +296,7 @@ public class PulsarMessageChannelBinder extends
 		}
 
 		private TypedMessageBuilderCustomizer<Object> applySpringHeadersAsPulsarProperties(MessageHeaders headers) {
-			return (mb) -> {
+			return mb -> {
 				if (this.headerMapper != null) {
 					this.headerMapper.toPulsarHeaders(headers).forEach(mb::property);
 				}

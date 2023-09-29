@@ -42,7 +42,7 @@ public class StubSchemaRegistryClient implements SchemaRegistryClient {
 	public SchemaRegistrationResponse register(String subject, String format,
 			String schema) {
 		if (!this.storedSchemas.containsKey(subject)) {
-			this.storedSchemas.put(subject, new TreeMap<Integer, SchemaWithId>());
+			this.storedSchemas.put(subject, new TreeMap<>());
 		}
 		Map<Integer, SchemaWithId> schemaVersions = this.storedSchemas.get(subject);
 		for (Map.Entry<Integer, SchemaWithId> integerSchemaEntry : schemaVersions

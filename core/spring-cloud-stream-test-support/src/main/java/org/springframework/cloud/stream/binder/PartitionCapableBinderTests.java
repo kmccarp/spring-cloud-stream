@@ -260,7 +260,7 @@ public abstract class PartitionCapableBinderTests<B extends AbstractTestBinder<?
 		Message<?> receive2 = receive(input2);
 		assertThat(receive2).isNotNull();
 
-		Condition<Message<?>> correlationHeadersForPayload2 = new Condition<Message<?>>() {
+		Condition<Message<?>> correlationHeadersForPayload2 = new Condition<>() {
 			@Override
 			public boolean matches(Message<?> value) {
 				IntegrationMessageHeaderAccessor accessor = new IntegrationMessageHeaderAccessor(
@@ -282,7 +282,7 @@ public abstract class PartitionCapableBinderTests<B extends AbstractTestBinder<?
 					receive2);
 			assertThat(receivedMessages).extracting("payload").containsExactlyInAnyOrder(
 					"0".getBytes(), "1".getBytes(), "2".getBytes());
-			Condition<Message<?>> payloadIs2 = new Condition<Message<?>>() {
+			Condition<Message<?>> payloadIs2 = new Condition<>() {
 
 				@Override
 				public boolean matches(Message<?> value) {

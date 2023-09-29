@@ -84,7 +84,7 @@ public class RabbitConfiguration {
 		connectionFactoryBean.afterPropertiesSet();
 		com.rabbitmq.client.ConnectionFactory connectionFactory = connectionFactoryBean.getObject();
 		connectionFactoryCustomizers.orderedStream()
-				.forEach((customizer) -> customizer.customize(connectionFactory));
+				.forEach(customizer -> customizer.customize(connectionFactory));
 
 		CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(connectionFactory);
 		rabbitCachingConnectionFactoryConfigurer.configure(cachingConnectionFactory);

@@ -61,10 +61,10 @@ class SmartPayloadArgumentResolver extends PayloadMethodArgumentResolver {
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
-		return (!Message.class.isAssignableFrom(parameter.getParameterType())
+		return !Message.class.isAssignableFrom(parameter.getParameterType())
 				&& !MessageHeaders.class.isAssignableFrom(parameter.getParameterType())
 				&& !parameter.hasParameterAnnotation(Header.class)
-				&& !parameter.hasParameterAnnotation(Headers.class));
+				&& !parameter.hasParameterAnnotation(Headers.class);
 	}
 
 	/**
@@ -134,7 +134,7 @@ class SmartPayloadArgumentResolver extends PayloadMethodArgumentResolver {
 
 	private String getParameterName(MethodParameter param) {
 		String paramName = param.getParameterName();
-		return (paramName != null ? paramName : "Arg " + param.getParameterIndex());
+		return paramName != null ? paramName : "Arg " + param.getParameterIndex();
 	}
 
 }

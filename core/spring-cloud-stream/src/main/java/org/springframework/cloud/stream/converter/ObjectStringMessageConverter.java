@@ -115,7 +115,7 @@ public class ObjectStringMessageConverter extends AbstractMessageConverter {
 	protected Object convertToInternal(Object payload, MessageHeaders headers,
 			Object conversionHint) {
 		if (payload != null) {
-			if ((payload instanceof byte[])) {
+			if (payload instanceof byte[]) {
 				return payload;
 			}
 			else {

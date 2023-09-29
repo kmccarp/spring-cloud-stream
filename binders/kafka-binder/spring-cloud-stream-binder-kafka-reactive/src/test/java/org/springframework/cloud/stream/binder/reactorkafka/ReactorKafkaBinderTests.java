@@ -90,7 +90,7 @@ public class ReactorKafkaBinderTests {
 		CountDownLatch latch = new CountDownLatch(2);
 
 		FluxMessageChannel inbound = new FluxMessageChannel();
-		Subscriber<Message<?>> sub = new Subscriber<Message<?>>() {
+		Subscriber<Message<?>> sub = new Subscriber<>() {
 
 			@Override
 			public void onSubscribe(Subscription s) {
@@ -115,7 +115,7 @@ public class ReactorKafkaBinderTests {
 
 		KafkaConsumerProperties ext = new KafkaConsumerProperties();
 		ExtendedConsumerProperties<KafkaConsumerProperties> props =
-				new ExtendedConsumerProperties<KafkaConsumerProperties>(ext);
+				new ExtendedConsumerProperties<>(ext);
 		props.setMultiplex(true);
 
 		Binding<MessageChannel> consumer = binder.bindConsumer("testCa, testCb", "foo", inbound, props);
@@ -159,7 +159,7 @@ public class ReactorKafkaBinderTests {
 		List<String> payloads = Collections.synchronizedList(new ArrayList<>());
 
 		FluxMessageChannel inbound = new FluxMessageChannel();
-		Subscriber<Message<?>> sub = new Subscriber<Message<?>>() {
+		Subscriber<Message<?>> sub = new Subscriber<>() {
 
 			@Override
 			public void onSubscribe(Subscription s) {
@@ -192,7 +192,7 @@ public class ReactorKafkaBinderTests {
 		KafkaConsumerProperties ext = new KafkaConsumerProperties();
 		ext.setReactiveAtMostOnce(atMostOnce);
 		ExtendedConsumerProperties<KafkaConsumerProperties> props =
-				new ExtendedConsumerProperties<KafkaConsumerProperties>(ext);
+				new ExtendedConsumerProperties<>(ext);
 		props.setConcurrency(2);
 
 		Binding<MessageChannel> consumer = binder.bindConsumer("testC1", "foo", inbound, props);
@@ -239,7 +239,7 @@ public class ReactorKafkaBinderTests {
 		List<String> payloads = Collections.synchronizedList(new ArrayList<>());
 
 		FluxMessageChannel inbound = new FluxMessageChannel();
-		Subscriber<Message<?>> sub = new Subscriber<Message<?>>() {
+		Subscriber<Message<?>> sub = new Subscriber<>() {
 
 			@Override
 			public void onSubscribe(Subscription s) {
@@ -271,7 +271,7 @@ public class ReactorKafkaBinderTests {
 		KafkaConsumerProperties ext = new KafkaConsumerProperties();
 		ext.setReactiveAutoCommit(true);
 		ExtendedConsumerProperties<KafkaConsumerProperties> props =
-				new ExtendedConsumerProperties<KafkaConsumerProperties>(ext);
+				new ExtendedConsumerProperties<>(ext);
 		props.setConcurrency(2);
 
 		Binding<MessageChannel> consumer = binder.bindConsumer("testC1", "foo", inbound, props);
@@ -335,7 +335,7 @@ public class ReactorKafkaBinderTests {
 		MessageChannel outbound = new FluxMessageChannel();
 		KafkaProducerProperties ext = new KafkaProducerProperties();
 		ExtendedProducerProperties<KafkaProducerProperties> props =
-				new ExtendedProducerProperties<KafkaProducerProperties>(ext);
+				new ExtendedProducerProperties<>(ext);
 		props.getExtension().setRecordMetadataChannel("sendResults");
 
 		Binding<MessageChannel> bindProducer = binder.bindProducer("testP", outbound, props);

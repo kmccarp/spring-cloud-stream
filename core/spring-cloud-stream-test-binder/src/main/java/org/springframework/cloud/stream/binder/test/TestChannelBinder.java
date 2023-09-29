@@ -220,7 +220,7 @@ public class TestChannelBinder extends
 	private static class IntegrationBinderInboundChannelAdapter
 		extends MessageProducerSupport {
 
-		private static final ThreadLocal<AttributeAccessor> attributesHolder = new ThreadLocal<AttributeAccessor>();
+		private static final ThreadLocal<AttributeAccessor> attributesHolder = new ThreadLocal<>();
 
 		private final IntegrationMessageListeningContainer listenerContainer;
 

@@ -158,7 +158,7 @@ public class BinderChildContextInitializer implements ApplicationContextAware, B
 			ApplicationContextAotGenerator aotGenerator = new ApplicationContextAotGenerator();
 
 			GeneratedMethod postProcessorMethod = beanRegistrationCode.getMethods().add("addChildContextInitializers",
-					(method) -> {
+					method -> {
 						method.addJavadoc("Use AOT child context initialization");
 						method.addModifiers(Modifier.PRIVATE, Modifier.STATIC);
 						method.addParameter(RegisteredBean.class, "registeredBean");

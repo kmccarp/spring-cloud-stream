@@ -74,7 +74,7 @@ public class ChannelsEndpoint implements ApplicationContextAware {
 			}
 		}
 		return new ObjectMapper().convertValue(map,
-				new TypeReference<Map<String, Object>>() {
+				new TypeReference<>() {
 				});
 	}
 
