@@ -34,11 +34,11 @@ import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
  */
 public class SendToDlqAndContinue implements ConsumerRecordRecoverer {
 
-	/**
-	 * DLQ dispatcher per topic in the application context. The key here is not the actual
-	 * DLQ topic but the incoming topic that caused the error.
-	 */
-	private Map<String, DeadLetterPublishingRecoverer> dlqDispatchers = new HashMap<>();
+    /**
+     * DLQ dispatcher per topic in the application context. The key here is not the actual
+     * DLQ topic but the incoming topic that caused the error.
+     */
+    private final Map<String, DeadLetterPublishingRecoverer> dlqDispatchers = new HashMap<>();
 
 	/**
 	 * For a given topic, send the key/value record to DLQ topic.

@@ -98,7 +98,7 @@ public class RabbitBindingCleaner implements BindingCleaner {
 			});
 		}
 		Map<String, List<String>> results = new HashMap<>();
-		if (removedQueues.size() > 0) {
+		if (!removedQueues.isEmpty()) {
 			results.put("queues", removedQueues);
 		}
 		// Fanout exchanges for taps
@@ -108,7 +108,7 @@ public class RabbitBindingCleaner implements BindingCleaner {
 				logger.debug("deleted exchange: " + exchange);
 			}
 		});
-		if (removedExchanges.size() > 0) {
+		if (!removedExchanges.isEmpty()) {
 			results.put("exchanges", removedExchanges);
 		}
 		return results;
@@ -141,7 +141,7 @@ public class RabbitBindingCleaner implements BindingCleaner {
 		List<Map<String, Object>> queues = getQueues(client, uri, vhost);
 		return queues.stream()
 			.filter(q -> ((String) q.get("name")).startsWith(queueNamePrefix))
-			.map(q -> checkNoConsumers(q))
+			.map(this::checkNoConsumers)
 			.collect(Collectors.toCollection(LinkedList::new));
 	}
 
@@ -187,7 +187,7 @@ public class RabbitBindingCleaner implements BindingCleaner {
 		exchangesToRemove.stream()
 				.map(exchange -> getExchangeBindingsByDestination(client, uri, vhost, exchange))
 				.forEach(bindings -> {
-					if (bindings.size() > 0) {
+					if (!bindings.isEmpty()) {
 						throw new RabbitAdminException("Cannot delete exchange "
 								+ bindings.get(0).get("destination") + "; it is a destination: " + bindings);
 					}

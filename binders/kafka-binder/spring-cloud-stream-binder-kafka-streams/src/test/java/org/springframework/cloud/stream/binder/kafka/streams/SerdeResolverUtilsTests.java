@@ -64,7 +64,7 @@ class SerdeResolverUtilsTests {
 		void returnsFallbackSerdeForWildcard() {
 			this.contextRunner
 				.withConfiguration(AutoConfigurations.of(SerdeResolverSimpleTestApp.class))
-				.run((context) -> {
+				.run(context -> {
 					ResolvableType wildcardType = ResolvableType.forClass(Serde.class).getGeneric(0);
 					assertThat(SerdeResolverUtils.resolveForType(context, wildcardType, fallback)).isSameAs(fallback);
 				});
@@ -74,7 +74,7 @@ class SerdeResolverUtilsTests {
 		void returnsSerdeBeanForMatchingType() {
 			this.contextRunner
 				.withConfiguration(AutoConfigurations.of(SerdeResolverSimpleTestApp.class))
-				.run((context) -> {
+				.run(context -> {
 					ResolvableType fooType = ResolvableType.forClass(Foo.class);
 					assertThat(SerdeResolverUtils.resolveForType(context, fooType, fallback)).isInstanceOf(FooSerde.class);
 				});
@@ -86,7 +86,7 @@ class SerdeResolverUtilsTests {
 			@ParameterizedTest
 			@MethodSource("kafkaStreamsBuiltInTypes")
 			void returnsStandardSerdeForKafkaStreamsBuiltInType(Class<?> builtInType, Serde<?> expectedBuiltInSerde) {
-				contextRunner.run((context) ->
+				contextRunner.run(context ->
 					assertThat(SerdeResolverUtils.resolveForType(context, ResolvableType.forClass(builtInType), fallback))
 						.isInstanceOf(expectedBuiltInSerde.getClass()));
 			}
@@ -111,7 +111,7 @@ class SerdeResolverUtilsTests {
 
 				@Test
 				void returnsFallbackSerdeWhenValidFallbackSpecified() {
-					contextRunner.run((context) ->
+					contextRunner.run(context ->
 						assertThat(SerdeResolverUtils.resolveForType(context, ResolvableType.forClass(Foo.class), fallback))
 							.isSameAs(fallback));
 				}
@@ -119,7 +119,7 @@ class SerdeResolverUtilsTests {
 				@ParameterizedTest
 				@MethodSource("invalidFallbackSerdeProvider")
 				void returnsJsonSerdeWhenInvalidFallbackSpecified(Serde<?> invalidFallback) {
-					contextRunner.run((context) ->
+					contextRunner.run(context ->
 						assertThat(SerdeResolverUtils.resolveForType(context, ResolvableType.forClass(Foo.class), invalidFallback))
 							.isInstanceOf(JsonSerde.class));
 				}
@@ -151,7 +151,7 @@ class SerdeResolverUtilsTests {
 					// This is an edge case as the only way to get to the JsonSerde step in the 1st place is when
 					// no fallback is specified or a fallback is specified but its invalid (for a built-in type).
 					// We will use the 'fallback is not specified' scenario for this test.
-					contextRunner.run((context) ->
+					contextRunner.run(context ->
 						assertThat(SerdeResolverUtils.resolveForType(context, ResolvableType.forClass(Object.class), null))
 							.isNull());
 				}
@@ -168,7 +168,7 @@ class SerdeResolverUtilsTests {
 		@Test
 		void returnsNoSerdesForWildcardType() {
 			this.contextRunner.withUserConfiguration(SerdeResolverSimpleTestApp.class)
-				.run((context) -> {
+				.run(context -> {
 					ResolvableType wildcardType = ResolvableType.forClass(Serde.class).getGeneric(0);
 					assertThat(SerdeResolverUtils.beanNamesForMatchingSerdes(context, wildcardType)).isEmpty();
 				});
@@ -207,7 +207,7 @@ class SerdeResolverUtilsTests {
 			ResolvableType geRaw = ResolvableType.forRawClass(GenericEvent.class);
 
 			this.contextRunner.withUserConfiguration(SerdeResolverSimpleTestApp.class)
-				.run((context) -> {
+				.run(context -> {
 
 				assertThat(SerdeResolverUtils.beanNamesForMatchingSerdes(context, geDate))
 					.containsExactly(
@@ -278,7 +278,7 @@ class SerdeResolverUtilsTests {
 			ResolvableType geRaw = ResolvableType.forRawClass(GenericEvent.class);
 
 			this.contextRunner.withUserConfiguration(SerdeResolverComplexTestApp.class)
-				.run((context) -> {
+				.run(context -> {
 
 				assertThat(SerdeResolverUtils.beanNamesForMatchingSerdes(context, geFooDate))
 					.containsExactly(

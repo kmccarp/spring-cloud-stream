@@ -138,7 +138,7 @@ public class PulsarBinderUtilsTests {
 	@Nested
 	class MergeProducerPropertiesTests {
 
-		private static final Consumer<ProducerConfigProperties> SET_NO_PROPS = (__) -> {
+		private static final Consumer<ProducerConfigProperties> SET_NO_PROPS = __ -> {
 		};
 
 		@Test
@@ -148,59 +148,59 @@ public class PulsarBinderUtilsTests {
 
 		@Test
 		void basePropSpecifiedAtBinderLevelOnly() {
-			doMergeProducerPropertiesTest((binderProps) -> binderProps.setAccessMode(ProducerAccessMode.Exclusive),
+			doMergeProducerPropertiesTest(binderProps -> binderProps.setAccessMode(ProducerAccessMode.Exclusive),
 					SET_NO_PROPS, Map.of("accessMode", ProducerAccessMode.Exclusive));
 		}
 
 		@Test
 		void basePropSpecifiedAtBindingLevelOnly() {
 			doMergeProducerPropertiesTest(SET_NO_PROPS,
-					(bindingProps) -> bindingProps.setAccessMode(ProducerAccessMode.Exclusive),
+					bindingProps -> bindingProps.setAccessMode(ProducerAccessMode.Exclusive),
 					Map.of("accessMode", ProducerAccessMode.Exclusive));
 		}
 
 		@Test
 		void basePropSpecifiedAtBinderAndBindingLevel() {
 			doMergeProducerPropertiesTest(
-					(binderProps) -> binderProps.setAccessMode(ProducerAccessMode.ExclusiveWithFencing),
-					(bindingProps) -> bindingProps.setAccessMode(ProducerAccessMode.Exclusive),
+					binderProps -> binderProps.setAccessMode(ProducerAccessMode.ExclusiveWithFencing),
+					bindingProps -> bindingProps.setAccessMode(ProducerAccessMode.Exclusive),
 					Map.of("accessMode", ProducerAccessMode.Exclusive));
 		}
 
 		@Test
 		void basePropSpecifiedWithSameValueAsDefault() {
-			doMergeProducerPropertiesTest((binderProps) -> binderProps.setAccessMode(ProducerAccessMode.Shared),
-					(bindingProps) -> bindingProps.setAccessMode(ProducerAccessMode.Shared), Collections.emptyMap());
+			doMergeProducerPropertiesTest(binderProps -> binderProps.setAccessMode(ProducerAccessMode.Shared),
+					bindingProps -> bindingProps.setAccessMode(ProducerAccessMode.Shared), Collections.emptyMap());
 		}
 
 		@Test
 		void extPropSpecifiedAtBinderLevelOnly() {
-			doMergeProducerPropertiesTest((binderProps) -> binderProps.setMaxPendingMessages(1200), SET_NO_PROPS,
+			doMergeProducerPropertiesTest(binderProps -> binderProps.setMaxPendingMessages(1200), SET_NO_PROPS,
 					Map.of("maxPendingMessages", 1200));
 		}
 
 		@Test
 		void extPropSpecifiedAtBindingLevelOnly() {
-			doMergeProducerPropertiesTest(SET_NO_PROPS, (bindingProps) -> bindingProps.setMaxPendingMessages(1200),
+			doMergeProducerPropertiesTest(SET_NO_PROPS, bindingProps -> bindingProps.setMaxPendingMessages(1200),
 					Map.of("maxPendingMessages", 1200));
 		}
 
 		@Test
 		void extPropSpecifiedAtBinderAndBindingLevel() {
-			doMergeProducerPropertiesTest((binderProps) -> binderProps.setMaxPendingMessages(1100),
-					(bindingProps) -> bindingProps.setMaxPendingMessages(1200), Map.of("maxPendingMessages", 1200));
+			doMergeProducerPropertiesTest(binderProps -> binderProps.setMaxPendingMessages(1100),
+					bindingProps -> bindingProps.setMaxPendingMessages(1200), Map.of("maxPendingMessages", 1200));
 		}
 
 		@Test
 		void extPropSpecifiedWithSameValueAsDefault() {
-			doMergeProducerPropertiesTest((binderProps) -> binderProps.setMaxPendingMessages(1000),
-					(bindingProps) -> bindingProps.setMaxPendingMessages(1000), Collections.emptyMap());
+			doMergeProducerPropertiesTest(binderProps -> binderProps.setMaxPendingMessages(1000),
+					bindingProps -> bindingProps.setMaxPendingMessages(1000), Collections.emptyMap());
 		}
 
 		@Test
 		void baseAndExtPropsAreCombined() {
-			doMergeProducerPropertiesTest((binderProps) -> binderProps.setAccessMode(ProducerAccessMode.Exclusive),
-					(bindingProps) -> bindingProps.setMaxPendingMessages(1200),
+			doMergeProducerPropertiesTest(binderProps -> binderProps.setAccessMode(ProducerAccessMode.Exclusive),
+					bindingProps -> bindingProps.setMaxPendingMessages(1200),
 					Map.of("accessMode", ProducerAccessMode.Exclusive, "maxPendingMessages", 1200));
 		}
 
@@ -220,7 +220,7 @@ public class PulsarBinderUtilsTests {
 	@Nested
 	class MergeConsumerPropertiesTests {
 
-		private static final Consumer<ConsumerConfigProperties> SET_NO_PROPS = (__) -> {
+		private static final Consumer<ConsumerConfigProperties> SET_NO_PROPS = __ -> {
 		};
 
 		@Test
@@ -230,56 +230,56 @@ public class PulsarBinderUtilsTests {
 
 		@Test
 		void basePropSpecifiedAtBinderLevelOnly() {
-			doMergeConsumerPropertiesTest((binderProps) -> binderProps.setPriorityLevel(1000), SET_NO_PROPS,
+			doMergeConsumerPropertiesTest(binderProps -> binderProps.setPriorityLevel(1000), SET_NO_PROPS,
 					Map.of("priorityLevel", 1000));
 		}
 
 		@Test
 		void basePropSpecifiedAtBindingLevelOnly() {
-			doMergeConsumerPropertiesTest(SET_NO_PROPS, (bindingProps) -> bindingProps.setPriorityLevel(1000),
+			doMergeConsumerPropertiesTest(SET_NO_PROPS, bindingProps -> bindingProps.setPriorityLevel(1000),
 					Map.of("priorityLevel", 1000));
 		}
 
 		@Test
 		void basePropSpecifiedAtBinderAndBindingLevel() {
-			doMergeConsumerPropertiesTest((binderProps) -> binderProps.setPriorityLevel(2000),
-					(bindingProps) -> bindingProps.setPriorityLevel(1000), Map.of("priorityLevel", 1000));
+			doMergeConsumerPropertiesTest(binderProps -> binderProps.setPriorityLevel(2000),
+					bindingProps -> bindingProps.setPriorityLevel(1000), Map.of("priorityLevel", 1000));
 		}
 
 		@Test
 		void basePropSpecifiedWithSameValueAsDefault() {
-			doMergeConsumerPropertiesTest((binderProps) -> binderProps.setPriorityLevel(0),
-					(bindingProps) -> bindingProps.setPriorityLevel(0), Collections.emptyMap());
+			doMergeConsumerPropertiesTest(binderProps -> binderProps.setPriorityLevel(0),
+					bindingProps -> bindingProps.setPriorityLevel(0), Collections.emptyMap());
 		}
 
 		@Test
 		void extPropSpecifiedAtBinderLevelOnly() {
-			doMergeConsumerPropertiesTest((binderProps) -> binderProps.setReceiverQueueSize(1200), SET_NO_PROPS,
+			doMergeConsumerPropertiesTest(binderProps -> binderProps.setReceiverQueueSize(1200), SET_NO_PROPS,
 					Map.of("receiverQueueSize", 1200));
 		}
 
 		@Test
 		void extPropSpecifiedAtBindingLevelOnly() {
-			doMergeConsumerPropertiesTest(SET_NO_PROPS, (bindingProps) -> bindingProps.setReceiverQueueSize(1200),
+			doMergeConsumerPropertiesTest(SET_NO_PROPS, bindingProps -> bindingProps.setReceiverQueueSize(1200),
 					Map.of("receiverQueueSize", 1200));
 		}
 
 		@Test
 		void extPropSpecifiedAtBinderAndBindingLevel() {
-			doMergeConsumerPropertiesTest((binderProps) -> binderProps.setReceiverQueueSize(1100),
-					(bindingProps) -> bindingProps.setReceiverQueueSize(1200), Map.of("receiverQueueSize", 1200));
+			doMergeConsumerPropertiesTest(binderProps -> binderProps.setReceiverQueueSize(1100),
+					bindingProps -> bindingProps.setReceiverQueueSize(1200), Map.of("receiverQueueSize", 1200));
 		}
 
 		@Test
 		void extPropSpecifiedWithSameValueAsDefault() {
-			doMergeConsumerPropertiesTest((binderProps) -> binderProps.setReceiverQueueSize(1000),
-					(bindingProps) -> bindingProps.setReceiverQueueSize(1000), Collections.emptyMap());
+			doMergeConsumerPropertiesTest(binderProps -> binderProps.setReceiverQueueSize(1000),
+					bindingProps -> bindingProps.setReceiverQueueSize(1000), Collections.emptyMap());
 		}
 
 		@Test
 		void baseAndExtPropsAreCombined() {
-			doMergeConsumerPropertiesTest((binderProps) -> binderProps.setPriorityLevel(1000),
-					(bindingProps) -> bindingProps.setReceiverQueueSize(1200),
+			doMergeConsumerPropertiesTest(binderProps -> binderProps.setPriorityLevel(1000),
+					bindingProps -> bindingProps.setReceiverQueueSize(1200),
 					Map.of("priorityLevel", 1000, "receiverQueueSize", 1200));
 		}
 

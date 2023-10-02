@@ -420,7 +420,7 @@ public class KafkaBinderConfigurationProperties {
 
 	private void filterStreamManagedConfiguration(Map<String, Object> configuration) {
 		if (configuration.containsKey(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG)
-				&& configuration.get(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG).toString().equalsIgnoreCase("true")) {
+				&& "true".equalsIgnoreCase(configuration.get(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG).toString())) {
 			logger.warn(constructIgnoredConfigMessage(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG) +
 					ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG + "=true is not supported by the Kafka binder");
 			configuration.remove(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG);
@@ -441,7 +441,7 @@ public class KafkaBinderConfigurationProperties {
 			Map<String, Object> configuration, String bootstrapServersConfig) {
 		final String kafkaConnectionString = getKafkaConnectionString();
 		if (ObjectUtils.isEmpty(configuration.get(bootstrapServersConfig)) ||
-				!kafkaConnectionString.equals("localhost:9092")) {
+				!"localhost:9092".equals(kafkaConnectionString)) {
 			configuration.put(bootstrapServersConfig, kafkaConnectionString);
 		}
 		return Collections.unmodifiableMap(configuration);

@@ -240,7 +240,7 @@ public class BindingServiceConfiguration {
 	@Bean
 	public ApplicationListener<ContextRefreshedEvent> appListener(
 			SpringIntegrationProperties springIntegrationProperties) {
-		return new ApplicationListener<ContextRefreshedEvent>() {
+		return new ApplicationListener<>() {
 
 			@Override
 			public void onApplicationEvent(ContextRefreshedEvent event) {

@@ -28,7 +28,7 @@ public class SchemaRegistryClientProperties {
 
 	private String endpoint;
 
-	private boolean cached = false;
+	private boolean cached;
 
 	public String getEndpoint() {
 		return this.endpoint;

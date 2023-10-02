@@ -138,14 +138,14 @@ public class InteractiveQueryService {
 			if (candidateStores.size() > 1) {
 
 				candidateStores = candidateStores.entrySet().stream()
-						.filter((e) -> this.topologyInfoFacade.streamsAppActuallyHasStore(e.getKey(), storeName))
+						.filter(e -> this.topologyInfoFacade.streamsAppActuallyHasStore(e.getKey(), storeName))
 						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 				if (candidateStores.size() == 1) {
 					return candidateStores.values().stream().findFirst().get();
 				}
 
-				throwable = (candidateStores.size() == 0) ?
+				throwable = candidateStores.size() == 0 ?
 						new UnknownStateStoreException("Store (" + storeName + ") not available to Streams instance") :
 						new InvalidStateStoreException("Store (" + storeName + ") available to more than one Streams instance");
 
@@ -224,7 +224,7 @@ public class InteractiveQueryService {
 			try {
 				final KeyQueryMetadata keyQueryMetadata = this.kafkaStreamsRegistry.getKafkaStreams()
 						.stream()
-						.map((k) -> Optional.ofNullable(k.queryMetadataForKey(store, key, serializer)))
+						.map(k -> Optional.ofNullable(k.queryMetadataForKey(store, key, serializer)))
 						.filter(Optional::isPresent).map(Optional::get).findFirst().orElse(null);
 				if (keyQueryMetadata != null) {
 					return keyQueryMetadata.activeHost();
@@ -265,7 +265,7 @@ public class InteractiveQueryService {
 	public <K> KeyQueryMetadata getKeyQueryMetadata(String store, K key, Serializer<K> serializer) {
 		return this.kafkaStreamsRegistry.getKafkaStreams()
 				.stream()
-				.map((k) -> Optional.ofNullable(k.queryMetadataForKey(store, key, serializer)))
+				.map(k -> Optional.ofNullable(k.queryMetadataForKey(store, key, serializer)))
 				.filter(Optional::isPresent).map(Optional::get).findFirst().orElse(null);
 	}
 

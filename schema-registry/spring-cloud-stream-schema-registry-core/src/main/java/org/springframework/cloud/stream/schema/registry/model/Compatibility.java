@@ -39,6 +39,6 @@ public enum Compatibility {
 	/**
 	 * Lack of compatibility.
 	 */
-	INCOMPATIBLE;
+	INCOMPATIBLE
 
 }

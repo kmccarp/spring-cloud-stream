@@ -126,10 +126,10 @@ public class KafkaRetryDlqBinderOrContainerTests {
 		@Bean
 		public ProducerConfigCustomizer producerConfigCustomizer() {
 			return (producerProperties, binding, destination) -> {
-				if (binding.equals("retryInBinder-in-0")) {
+				if ("retryInBinder-in-0".equals(binding)) {
 					latch.countDown();
 				}
-				else if (binding.equals("retryInContainer-in-0")) {
+				else if ("retryInContainer-in-0".equals(binding)) {
 					latch.countDown();
 				}
 			};

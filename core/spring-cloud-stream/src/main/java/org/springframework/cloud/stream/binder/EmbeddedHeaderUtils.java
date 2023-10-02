@@ -122,7 +122,7 @@ public abstract class EmbeddedHeaderUtils {
 		int headerCount = byteBuffer.get() & 0xff;
 		if (headerCount == 0xff) {
 			headerCount = byteBuffer.get() & 0xff;
-			Map<String, Object> headers = new HashMap<String, Object>();
+			Map<String, Object> headers = new HashMap<>();
 			for (int i = 0; i < headerCount; i++) {
 				int len = byteBuffer.get() & 0xff;
 				String headerName = new String(payload, byteBuffer.position(), len,

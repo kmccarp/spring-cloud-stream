@@ -563,8 +563,7 @@ public class PollableConsumerTests {
 		this.context = new SpringApplicationBuilder(
 			TestChannelBinderConfiguration.getCompleteConfiguration())
 			.web(WebApplicationType.NONE).run(args);
-		TestChannelBinder binder = this.context.getBean(TestChannelBinder.class);
-		return binder;
+		return this.context.getBean(TestChannelBinder.class);
 	}
 
 	public static class Foo {
@@ -584,7 +583,7 @@ public class PollableConsumerTests {
 	public static class LifecycleMessageSource<T> implements MessageSource<T>, Lifecycle {
 		private final MessageSource<T> delegate;
 
-		private boolean running = false;
+		private boolean running;
 
 		public LifecycleMessageSource(MessageSource<T> delegate) {
 			this.delegate = delegate;

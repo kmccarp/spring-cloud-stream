@@ -69,7 +69,7 @@ public class RabbitStreamBinderModuleIntegrationTests {
 			rProps.setContainerType(ContainerType.STREAM);
 			rProps.setSuperStream(true);
 			ExtendedConsumerProperties<RabbitConsumerProperties> props =
-					new ExtendedConsumerProperties<RabbitConsumerProperties>(rProps);
+					new ExtendedConsumerProperties<>(rProps);
 			props.setAutoStartup(false);
 			props.setInstanceCount(3);
 			props.setConcurrency(3);
