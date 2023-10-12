@@ -67,7 +67,7 @@ public class ReactorKafkaBinderHealthIndicatorTests {
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
 		org.mockito.BDDMockito.given(consumerFactory.createConsumer())
-			.willReturn((consumer));
+			.willReturn(consumer);
 		org.mockito.BDDMockito.given(binder.getTopicsInUse()).willReturn(topicsInUse);
 		this.indicator = new ReactorKafkaBinderHealthIndicator(binder, consumerFactory);
 		this.indicator.setTimeout(10);

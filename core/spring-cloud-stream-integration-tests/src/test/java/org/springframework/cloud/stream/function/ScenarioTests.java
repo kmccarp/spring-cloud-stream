@@ -137,9 +137,7 @@ public class ScenarioTests {
 		@SuppressWarnings("unchecked")
 		@Bean
 		public <I, O> Function<I, O> genericTypeFunction() {
-			return v -> {
-				return (O) ("hello_" + new String((byte[]) v));
-			};
+			return v -> (O) ("hello_" + new String((byte[]) v));
 		}
 	}
 
@@ -152,9 +150,7 @@ public class ScenarioTests {
 		}
 		@Bean
 		public Function<Message<?>, Message<?>> messageFunction() {
-			return message -> {
-				return message;
-			};
+			return message -> message;
 		}
 
 	}
@@ -185,7 +181,7 @@ public class ScenarioTests {
 		@Bean
 		public Consumer<String> consume() {
 			return v -> {
-				if (v.equals("destination")) {
+				if ("destination".equals(v)) {
 					destinationCounter++;
 				}
 				else {

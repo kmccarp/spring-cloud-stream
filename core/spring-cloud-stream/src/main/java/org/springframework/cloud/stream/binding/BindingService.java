@@ -188,7 +188,7 @@ public class BindingService {
 						consumerProperties);
 			}
 			catch (RuntimeException e) {
-				LateBinding<T> late = new LateBinding<T>(target,
+				LateBinding<T> late = new LateBinding<>(target,
 						e.getCause() == null ? e.toString() : e.getCause().getMessage(), consumerProperties, true, this.objectMapper);
 				rescheduleConsumerBinding(input, inputName, binder, consumerProperties,
 						target, late, e);
@@ -236,7 +236,7 @@ public class BindingService {
 						(PollableSource) input, consumerProperties);
 			}
 			catch (RuntimeException e) {
-				LateBinding<T> late = new LateBinding<T>(target,
+				LateBinding<T> late = new LateBinding<>(target,
 						e.getCause() == null ? e.toString() : e.getCause().getMessage(), consumerProperties, true, this.objectMapper);
 				reschedulePollableConsumerBinding(input, inputName, binder,
 						consumerProperties, target, late, e);
@@ -353,7 +353,7 @@ public class BindingService {
 				return binder.bindProducer(bindingTarget, output, producerProperties);
 			}
 			catch (RuntimeException e) {
-				LateBinding<T> late = new LateBinding<T>(bindingTarget,
+				LateBinding<T> late = new LateBinding<>(bindingTarget,
 						e.getCause() == null ? e.toString() : e.getCause().getMessage(), producerProperties, false, this.objectMapper);
 				rescheduleProducerBinding(output, bindingTarget, binder,
 						producerProperties, late, e);

@@ -205,7 +205,7 @@ public class BindingsLifecycleController {
 		/**
 		 * Resumed state of a binding.
 		 */
-		RESUMED;
+		RESUMED
 
 	}
 

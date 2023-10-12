@@ -142,24 +142,14 @@ public class BindableFunctionProxyFactory extends BindableProxyFactory implement
 		if (!this.isFunctionExist()) {
 			return this.functionDefinition;
 		}
-		return new StringBuilder(this.functionDefinition.replace(",", "|").replace("|", ""))
-			.append(FunctionConstants.DELIMITER)
-			.append(FunctionConstants.DEFAULT_INPUT_SUFFIX)
-			.append(FunctionConstants.DELIMITER)
-			.append(index)
-			.toString();
+		return this.functionDefinition.replace(",", "|").replace("|", "") + (FunctionConstants.DELIMITER) + (FunctionConstants.DEFAULT_INPUT_SUFFIX) + (FunctionConstants.DELIMITER) + index;
 	}
 
 	private String buildOutputNameForIndex(int index) {
 		if (!this.isFunctionExist()) {
 			return this.functionDefinition;
 		}
-		return new StringBuilder(this.functionDefinition.replace(",", "|").replace("|", ""))
-				.append(FunctionConstants.DELIMITER)
-				.append(FunctionConstants.DEFAULT_OUTPUT_SUFFIX)
-				.append(FunctionConstants.DELIMITER)
-				.append(index)
-				.toString();
+		return this.functionDefinition.replace(",", "|").replace("|", "") + (FunctionConstants.DELIMITER) + (FunctionConstants.DEFAULT_OUTPUT_SUFFIX) + (FunctionConstants.DELIMITER) + index;
 	}
 
 	private void createInput(String name) {

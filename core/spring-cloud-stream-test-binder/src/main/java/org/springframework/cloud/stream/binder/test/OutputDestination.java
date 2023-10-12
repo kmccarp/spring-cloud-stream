@@ -17,6 +17,7 @@
 package org.springframework.cloud.stream.binder.test;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedTransferQueue;
@@ -60,7 +61,7 @@ public class OutputDestination extends AbstractDestination {
 	 * @since 3.0.6
 	 */
 	public void clear() {
-		this.messageQueues.values().forEach(v -> v.clear());
+		this.messageQueues.values().forEach(Collection::clear);
 	}
 
 	/**

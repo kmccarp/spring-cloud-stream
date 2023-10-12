@@ -134,7 +134,7 @@ public class DlqDestinationResolverTests {
 		@Bean
 		public DlqDestinationResolver dlqDestinationResolver() {
 			return (rec, ex) -> {
-				if (rec.topic().equals("word1")) {
+				if ("word1".equals(rec.topic())) {
 					return "topic1-dlq";
 				}
 				return "topic2-dlq";

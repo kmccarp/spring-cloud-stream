@@ -105,7 +105,7 @@ public class PulsarBinderTests extends
 		var producerFactory = new DefaultPulsarProducerFactory<>(pulsarClient);
 		var pulsarTemplate = new PulsarTemplate<>(producerFactory);
 		var consumerFactory = new DefaultPulsarConsumerFactory<>(pulsarClient,
-				List.of((consumerBuilder) -> consumerBuilder
+				List.of(consumerBuilder -> consumerBuilder
 						.subscriptionInitialPosition(SubscriptionInitialPosition.Earliest)));
 		if (this.binder == null) {
 			this.binder = new PulsarTestBinder(provisioner, pulsarTemplate, consumerFactory, configProps,
@@ -116,9 +116,8 @@ public class PulsarBinderTests extends
 
 	@Override
 	protected ExtendedConsumerProperties<PulsarConsumerProperties> createConsumerProperties() {
-		final ExtendedConsumerProperties<PulsarConsumerProperties> pulsarConsumerProperties = new ExtendedConsumerProperties<>(
+		return new ExtendedConsumerProperties<>(
 				new PulsarConsumerProperties());
-		return pulsarConsumerProperties;
 	}
 
 	@Override

@@ -547,7 +547,7 @@ public class ContentTypeTckTests {
 
 		@Bean
 		public Function<Person, String> echo() {
-			return value -> value.toString();
+			return org.springframework.cloud.stream.binder.tck.ContentTypeTckTests.Person::toString;
 		}
 	}
 
@@ -622,10 +622,8 @@ public class ContentTypeTckTests {
 
 		@Bean
 		public Function<?, Message<?>> echo() {
-			return value -> {
-				return MessageBuilder.withPayload(value.toString())
+			return value -> MessageBuilder.withPayload(value.toString())
 					.setHeader("expected-content-type", "text/*").build();
-			};
 		}
 	}
 

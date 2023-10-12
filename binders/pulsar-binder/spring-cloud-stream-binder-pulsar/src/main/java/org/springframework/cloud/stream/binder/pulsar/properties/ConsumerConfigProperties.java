@@ -439,7 +439,7 @@ public class ConsumerConfigProperties extends PulsarProperties.Consumer {
 	static class Properties extends HashMap<String, Object> {
 
 		<V> java.util.function.Consumer<V> in(String key) {
-			return (value) -> put(key, value);
+			return value -> put(key, value);
 		}
 
 	}

@@ -75,13 +75,13 @@ public class ProducerProperties {
 
 	private HeaderMode headerMode;
 
-	private boolean useNativeEncoding = false;
+	private boolean useNativeEncoding;
 
-	private boolean errorChannelEnabled = false;
+	private boolean errorChannelEnabled;
 
 	private PollerProperties poller;
 
-	private boolean dynamicPartitionUpdatesEnabled = false;
+	private boolean dynamicPartitionUpdatesEnabled;
 
 	public String getBindingName() {
 		return bindingName;

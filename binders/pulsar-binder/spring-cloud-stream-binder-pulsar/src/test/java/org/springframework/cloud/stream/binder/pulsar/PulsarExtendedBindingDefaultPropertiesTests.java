@@ -55,7 +55,7 @@ class PulsarExtendedBindingDefaultPropertiesTests implements PulsarTestContainer
 
 	@Test
 	void defaultsUsedWhenNoCustomBindingProperties() {
-		this.contextRunner.run((context) -> {
+		this.contextRunner.run(context -> {
 			assertThat(context)
 				.hasNotFailed()
 				.hasBean("pulsar_binderProducingContext");
@@ -82,7 +82,7 @@ class PulsarExtendedBindingDefaultPropertiesTests implements PulsarTestContainer
 				"spring.cloud.stream.pulsar.bindings.process-in-0.consumer.receiverQueueSize: 8000",
 				"spring.cloud.stream.pulsar.bindings.process-out-0.producer.blockIfQueueFull: false",
 				"spring.cloud.stream.pulsar.bindings.process-out-0.producer.maxPendingMessages: 400")
-			.run((context) -> {
+			.run(context -> {
 				assertThat(context)
 					.hasNotFailed()
 					.hasBean("pulsar_binderProducingContext");

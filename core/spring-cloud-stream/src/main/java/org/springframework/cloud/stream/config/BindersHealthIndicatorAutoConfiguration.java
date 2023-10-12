@@ -133,7 +133,7 @@ public class BindersHealthIndicatorAutoConfiguration {
 		@Override
 		public Iterator<NamedContributor<HealthContributor>> iterator() {
 			return contributors.entrySet().stream()
-					.map((entry) -> NamedContributor.of(entry.getKey(), entry.getValue())).iterator();
+					.map(entry -> NamedContributor.of(entry.getKey(), entry.getValue())).iterator();
 		}
 
 	}

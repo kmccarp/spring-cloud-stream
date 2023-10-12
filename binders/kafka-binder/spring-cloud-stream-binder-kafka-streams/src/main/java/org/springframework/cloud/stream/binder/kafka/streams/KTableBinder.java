@@ -95,7 +95,7 @@ class KTableBinder extends
 				this.kafkaStreamsBindingInformationCatalogue.bindingNamePerTarget(inputTarget),
 				this.kafkaStreamsBindingInformationCatalogue, streamsBuilderFactoryBean);
 
-		return new DefaultBinding<KTable<Object, Object>>(bindingName, group, inputTarget, streamsBuilderFactoryBean) {
+		return new DefaultBinding<>(bindingName, group, inputTarget, streamsBuilderFactoryBean) {
 
 			@Override
 			public boolean isInput() {

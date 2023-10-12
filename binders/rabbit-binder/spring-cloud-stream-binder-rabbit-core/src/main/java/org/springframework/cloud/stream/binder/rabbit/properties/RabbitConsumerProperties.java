@@ -71,7 +71,7 @@ public class RabbitConsumerProperties extends RabbitCommonProperties {
 	/**
 	 * true to requeue rejected messages, false to discard (or route to DLQ).
 	 */
-	private boolean requeueRejected = false;
+	private boolean requeueRejected;
 
 	/**
 	 * patterns to match which headers are mapped (inbound).
@@ -91,7 +91,7 @@ public class RabbitConsumerProperties extends RabbitCommonProperties {
 	/**
 	 * when true, stop the container instead of retrying queue declarations.
 	 */
-	private boolean missingQueuesFatal = false;
+	private boolean missingQueuesFatal;
 
 	/**
 	 * how many times to attempt passive queue declaration.
