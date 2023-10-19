@@ -47,7 +47,7 @@ import org.springframework.util.Assert;
 public class BindableProxyFactory extends AbstractBindableProxyFactory
 		implements MethodInterceptor, FactoryBean<Object>, InitializingBean, BeanFactoryAware {
 
-	private static Log log = LogFactory.getLog(BindableProxyFactory.class);
+	private static final Log log = LogFactory.getLog(BindableProxyFactory.class);
 
 	private final Map<Method, Object> targetCache = new HashMap<>(2);
 

@@ -22,7 +22,7 @@ package org.springframework.cloud.stream.binder;
  */
 public class ExtendedProducerProperties<T> extends ProducerProperties {
 
-	private T extension;
+	private final T extension;
 
 	public ExtendedProducerProperties(T extension) {
 		this.extension = extension;

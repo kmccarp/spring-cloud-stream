@@ -72,9 +72,9 @@ public class KafkaBinderMetricsTest {
 	@Mock
 	private KafkaMessageChannelBinder binder;
 
-	private MeterRegistry meterRegistry = new SimpleMeterRegistry();
+	private final MeterRegistry meterRegistry = new SimpleMeterRegistry();
 
-	private Map<String, TopicInformation> topicsInUse = new HashMap<>();
+	private final Map<String, TopicInformation> topicsInUse = new HashMap<>();
 
 	@Mock(answer = Answers.RETURNS_DEEP_STUBS)
 	private KafkaBinderConfigurationProperties kafkaBinderConfigurationProperties;

@@ -36,7 +36,7 @@ public class InputBindingLifecycle extends AbstractBindingLifecycle {
 	@SuppressWarnings("unused")
 	// It is actually used reflectively since at the moment we do not want to expose it
 	// via public method
-	private Collection<Binding<Object>> inputBindings = new ArrayList<Binding<Object>>();
+	private Collection<Binding<Object>> inputBindings = new ArrayList<>();
 
 	public InputBindingLifecycle(BindingService bindingService,
 			Map<String, Bindable> bindables) {

@@ -25,7 +25,7 @@ package org.springframework.cloud.stream.binder;
  */
 public class ExtendedConsumerProperties<T> extends ConsumerProperties {
 
-	private T extension;
+	private final T extension;
 
 	public ExtendedConsumerProperties(T extension) {
 		this.extension = extension;

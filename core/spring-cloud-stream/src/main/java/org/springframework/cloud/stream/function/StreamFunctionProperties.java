@@ -104,12 +104,11 @@ public class StreamFunctionProperties {
 	}
 
 	private List<String> filterBindings(String functionName, String suffix) {
-		List<String> list = bindings.keySet().stream()
+		return bindings.keySet().stream()
 				.filter(bKey -> bKey.contains(functionName + suffix))
 				.sorted()
-				.map(bKey -> bindings.get(bKey))
+				.map(bindings::get)
 				.collect(Collectors.toList());
-		return list;
 	}
 
 	Map<String, Boolean> getReactive() {

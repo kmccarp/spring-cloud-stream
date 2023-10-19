@@ -28,9 +28,9 @@ package org.springframework.cloud.stream.binding;
  */
 public final class BoundTargetHolder {
 
-	private Object boundTarget;
+	private final Object boundTarget;
 
-	private boolean bindable;
+	private final boolean bindable;
 
 	public BoundTargetHolder(Object boundTarget, boolean bindable) {
 		this.boundTarget = boundTarget;

@@ -226,11 +226,7 @@ public class StreamBridgeTests {
 
 			int threadCount = 10;
 			Set<Thread> threads = IntStream.range(0, threadCount)
-				.mapToObj(i -> (Runnable) () -> IntStream.range(0, 100).forEach(j -> {
-					String value = "M-" + i + "-" + j;
-					streamBridge.send("outputA-out-0",
-						MessageBuilder.withPayload(value).setHeader("partitionKey", value).build());
-				})).map(Thread::new).collect(Collectors.toSet());
+				.mapToObj(Runnable.class::cast).map(Thread::new).collect(Collectors.toSet());
 
 			threads.forEach(Thread::start);
 			for (Thread thread : threads) {
@@ -859,7 +855,7 @@ public class StreamBridgeTests {
 		@Bean
 		public IntegrationFlow someFlow(MessageHandler sendMessage, MessageChannel inputChannel) {
 			return IntegrationFlow.from(inputChannel)
-				.log(LoggingHandler.Level.INFO, (m) -> {
+				.log(LoggingHandler.Level.INFO, m -> {
 					LATCH1.countDown();
 					return "Going through the first flow: " + m.getPayload();
 				})
@@ -870,7 +866,7 @@ public class StreamBridgeTests {
 		@Bean
 		public IntegrationFlow someOtherFlow(MessageHandler sendMessage) {
 			return IntegrationFlow.from(otherInputChannel())
-				.log(LoggingHandler.Level.INFO, (m) -> {
+				.log(LoggingHandler.Level.INFO, m -> {
 					LATCH2.countDown();
 					return "Going through the second flow: " + m.getPayload();
 				})

@@ -16,6 +16,7 @@
 
 package org.springframework.cloud.stream.binder.kafka.streams;
 
+import java.util.Objects;
 import java.util.Properties;
 
 import org.apache.commons.logging.Log;
@@ -122,7 +123,7 @@ class KStreamBinder extends
 				this.kafkaStreamsBindingInformationCatalogue, streamsBuilderFactoryBean);
 
 
-		return new DefaultBinding<KStream<Object, Object>>(bindingName, group,
+		return new DefaultBinding<>(bindingName, group,
 				inputTarget, streamsBuilderFactoryBean) {
 
 			@Override
@@ -197,7 +198,7 @@ class KStreamBinder extends
 		final Properties streamsConfiguration = streamsBuilderFactoryBean.getStreamsConfiguration();
 		final String applicationId = streamsConfiguration != null ? (String) streamsConfiguration.get("application.id") : bindingName;
 
-		return new DefaultBinding<KStream<Object, Object>>(bindingName,
+		return new DefaultBinding<>(bindingName,
 				applicationId, outboundBindTarget, streamsBuilderFactoryBean) {
 
 			@Override
@@ -254,7 +255,7 @@ class KStreamBinder extends
 		if (!isNativeEncoding) {
 			LOG.info("Native encoding is disabled for " + name
 					+ ". Outbound message conversion done by Spring Cloud Stream.");
-			outboundBindTarget.filter((k, v) -> v == null)
+			outboundBindTarget.filter(Objects::isNull)
 					.to(name, produced);
 			this.kafkaStreamsMessageConversionDelegate
 					.serializeOnOutbound(outboundBindTarget)

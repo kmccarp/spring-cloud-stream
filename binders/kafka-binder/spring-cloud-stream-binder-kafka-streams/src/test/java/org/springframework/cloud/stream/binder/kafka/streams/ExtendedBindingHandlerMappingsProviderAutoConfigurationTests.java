@@ -41,7 +41,7 @@ class ExtendedBindingHandlerMappingsProviderAutoConfigurationTests {
 
 	@Test
 	void defaultsUsedWhenNoCustomBindingProperties() {
-		this.contextRunner.run((context) -> {
+		this.contextRunner.run(context -> {
 			assertThat(context)
 					.hasNotFailed()
 					.hasSingleBean(KafkaStreamsExtendedBindingProperties.class);
@@ -62,7 +62,7 @@ class ExtendedBindingHandlerMappingsProviderAutoConfigurationTests {
 				.withPropertyValues(
 					"spring.cloud.stream.kafka.streams.bindings.process-in-0.consumer.consumed-as: custom-consumer",
 					"spring.cloud.stream.kafka.streams.bindings.process-out-0.producer.produced-as: custom-producer")
-				.run((context) -> {
+				.run(context -> {
 					assertThat(context)
 							.hasNotFailed()
 							.hasSingleBean(KafkaStreamsExtendedBindingProperties.class);

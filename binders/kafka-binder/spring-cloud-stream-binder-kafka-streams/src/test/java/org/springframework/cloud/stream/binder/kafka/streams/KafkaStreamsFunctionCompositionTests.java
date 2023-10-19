@@ -248,7 +248,7 @@ public class KafkaStreamsFunctionCompositionTests {
 
 				final ConsumerRecords<String, String> records = KafkaTestUtils.getRecords(consumer);
 				assertThat(records.iterator().hasNext()).isTrue();
-				assertThat(records.iterator().next().value().equals("foo1foo2From-anotherFooFuncFrom-yetAnotherFooFuncFrom-lastFunctionInChain")).isTrue();
+				assertThat("foo1foo2From-anotherFooFuncFrom-yetAnotherFooFuncFrom-lastFunctionInChain".equals(records.iterator().next().value())).isTrue();
 			}
 			finally {
 				pf.destroy();
@@ -293,7 +293,7 @@ public class KafkaStreamsFunctionCompositionTests {
 
 				final ConsumerRecords<String, String> records = KafkaTestUtils.getRecords(consumer);
 				assertThat(records.iterator().hasNext()).isTrue();
-				assertThat(records.iterator().next().value().equals("foo1foo2From-anotherFooFuncFrom-yetAnotherFooFuncFrom-lastFunctionInChain")).isTrue();
+				assertThat("foo1foo2From-anotherFooFuncFrom-yetAnotherFooFuncFrom-lastFunctionInChain".equals(records.iterator().next().value())).isTrue();
 			}
 			finally {
 				pf.destroy();

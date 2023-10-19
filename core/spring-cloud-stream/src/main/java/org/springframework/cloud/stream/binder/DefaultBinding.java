@@ -94,7 +94,7 @@ public class DefaultBinding<T> implements Binding<T> {
 
 	@Override
 	public String getBindingName() {
-		String resolvedName = (this.target instanceof IntegrationObjectSupport integrationObjectSupportTarget)
+		String resolvedName = this.target instanceof IntegrationObjectSupport integrationObjectSupportTarget
 			? integrationObjectSupportTarget.getComponentName() : getName();
 		return resolvedName == null ? getName() : resolvedName;
 	}
@@ -194,7 +194,7 @@ public class DefaultBinding<T> implements Binding<T> {
 	@Override
 	public String toString() {
 		return " Binding [name=" + this.name + ", target=" + this.target + ", lifecycle="
-				+ ((this.lifecycle instanceof NamedComponent namedComponentWithLifeCycle)
+				+ (this.lifecycle instanceof NamedComponent namedComponentWithLifeCycle
 						? namedComponentWithLifeCycle.getComponentName()
 						: ObjectUtils.nullSafeToString(this.lifecycle))
 				+ "]";

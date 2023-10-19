@@ -191,7 +191,7 @@ public final class BindingUtils {
 		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
 				ByteArraySerializer.class);
 		props.put(ProducerConfig.ACKS_CONFIG,
-				String.valueOf(configurationProperties.getRequiredAcks()));
+				configurationProperties.getRequiredAcks());
 		Map<String, Object> mergedConfig = configurationProperties
 				.mergedProducerConfiguration();
 		if (!ObjectUtils.isEmpty(mergedConfig)) {

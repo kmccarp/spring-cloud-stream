@@ -35,7 +35,7 @@ class OriginalContentTypeResolver implements ContentTypeResolver {
 
 	private static final String BINDER_ORIGINAL_CONTENT_TYPE = "originalContentType";
 
-	private ConcurrentMap<String, MimeType> mimeTypeCache = new ConcurrentHashMap<>();
+	private final ConcurrentMap<String, MimeType> mimeTypeCache = new ConcurrentHashMap<>();
 
 	@Override
 	public MimeType resolve(MessageHeaders headers) {

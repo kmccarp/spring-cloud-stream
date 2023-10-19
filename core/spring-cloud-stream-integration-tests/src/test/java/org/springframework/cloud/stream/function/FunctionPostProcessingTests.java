@@ -213,7 +213,7 @@ public class FunctionPostProcessingTests {
 
 		@Override
 		public String apply(String input) {
-			if (input.equals("error")) {
+			if ("error".equals(input)) {
 				throw new RuntimeException("intentional");
 			}
 			return input.toUpperCase();
@@ -221,7 +221,7 @@ public class FunctionPostProcessingTests {
 
 		@Override
 		public void postProcess(Message<String> result) {
-			if (result.getPayload().equals("POST_PROCESSING_ERROR")) {
+			if ("POST_PROCESSING_ERROR".equals(result.getPayload())) {
 				throw new RuntimeException("intentional");
 			}
 			success = true;

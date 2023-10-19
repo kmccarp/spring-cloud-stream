@@ -186,8 +186,8 @@ public class FunctionConfiguration {
 					FunctionInvocationWrapper functionWrapper = functionCatalog.lookup(proxyFactory.getFunctionDefinition());
 					if (functionWrapper != null && functionWrapper.isSupplier()) {
 						// gather output content types
-						List<String> contentTypes = new ArrayList<String>();
-						if (proxyFactory.getOutputs().size() == 0) {
+						List<String> contentTypes = new ArrayList<>();
+						if (proxyFactory.getOutputs().isEmpty()) {
 							return;
 						}
 						Assert.isTrue(proxyFactory.getOutputs().size() == 1, "Supplier with multiple outputs is not supported at the moment.");
@@ -285,9 +285,7 @@ public class FunctionConfiguration {
 	 */
 	private Publisher<Object> setupBindingTrigger(GenericApplicationContext context) {
 		AtomicReference<MonoSink<Object>> triggerRef = new AtomicReference<>();
-		Publisher<Object> beginPublishingTrigger = Mono.create(emmiter -> {
-			triggerRef.set(emmiter);
-		});
+		Publisher<Object> beginPublishingTrigger = Mono.create(triggerRef::set);
 		context.addApplicationListener(event -> {
 			if (event instanceof BindingCreatedEvent) {
 				if (triggerRef.get() != null) {
@@ -309,7 +307,7 @@ public class FunctionConfiguration {
 				&& (boolean) AnnotationUtils.getAnnotationAttributes(pollable).get("splittable");
 
 		FunctionInvocationWrapper function =
-			(supplier instanceof PartitionAwareFunctionWrapper partitionAwareFunctionWrapper)
+			supplier instanceof PartitionAwareFunctionWrapper partitionAwareFunctionWrapper
 				? (FunctionInvocationWrapper) partitionAwareFunctionWrapper.function : (FunctionInvocationWrapper) supplier;
 		boolean reactive = FunctionTypeUtils.isPublisher(function.getOutputType());
 
@@ -457,7 +455,7 @@ public class FunctionConfiguration {
 				if (!(bindableProxyFactory instanceof BindableFunctionProxyFactory)) {
 					Set<String> outputBindingNames = bindableProxyFactory.getOutputs();
 					shouldNotProcess = !CollectionUtils.isEmpty(outputBindingNames)
-							&& outputBindingNames.iterator().next().equals("applicationMetrics");
+							&& "applicationMetrics".equals(outputBindingNames.iterator().next());
 				}
 				if (StringUtils.hasText(functionDefinition) && !shouldNotProcess) {
 					FunctionInvocationWrapper function = functionCatalog.lookup(functionDefinition);
@@ -515,7 +513,7 @@ public class FunctionConfiguration {
 						Map<String, Object> headersMap = (Map<String, Object>) ReflectionUtils
 								.getField(headersField, ((Message) message).getHeaders());
 						headersMap.putIfAbsent(MessageUtils.TARGET_PROTOCOL, targetProtocol);
-						if (CloudEventMessageUtils.isCloudEvent((message))) {
+						if (CloudEventMessageUtils.isCloudEvent(message)) {
 							headersMap.putIfAbsent(MessageUtils.MESSAGE_TYPE, CloudEventMessageUtils.CLOUDEVENT_VALUE);
 						}
 						return message;
@@ -648,8 +646,8 @@ public class FunctionConfiguration {
 					? this.serviceProperties.getBindingProperties(outputChannelName).getProducer()
 							: null;
 
-			FunctionWrapper functionInvocationWrapper = (new FunctionWrapper(function, consumerProperties,
-					producerProperties, applicationContext, this.determineTargetProtocol(outputChannelName)));
+			FunctionWrapper functionInvocationWrapper = new FunctionWrapper(function, consumerProperties,
+					producerProperties, applicationContext, this.determineTargetProtocol(outputChannelName));
 
 			MessagingTemplate template = new MessagingTemplate();
 			template.setBeanFactory(applicationContext.getBeanFactory());
@@ -720,8 +718,7 @@ public class FunctionConfiguration {
 				String binderConfigurationName = this.serviceProperties.getBinder(outputBindingName);
 				BinderFactory binderFactory = applicationContext.getBean(BinderFactory.class);
 				Object binder = binderFactory.getBinder(binderConfigurationName, MessageChannel.class);
-				String protocol = binder.getClass().getSimpleName().startsWith("Rabbit") ? "amqp" : "kafka";
-				return protocol;
+				return binder.getClass().getSimpleName().startsWith("Rabbit") ? "amqp" : "kafka";
 			}
 			return null;
 		}
@@ -737,10 +734,9 @@ public class FunctionConfiguration {
 			if (CollectionUtils.isEmpty(outputNames)) {
 				outputNames = Collections.singletonList("output");
 			}
-			String outputDestinationName = bindableProxyFactory instanceof BindableFunctionProxyFactory
+			return bindableProxyFactory instanceof BindableFunctionProxyFactory
 					? ((BindableFunctionProxyFactory) bindableProxyFactory).getOutputName(index)
 							: (isConsumer ? null : outputNames.get(index));
-			return outputDestinationName;
 		}
 
 		private void assertBindingIsPossible(BindableProxyFactory bindableProxyFactory) {
@@ -908,7 +904,7 @@ public class FunctionConfiguration {
 								this.inputCount, this.outputCount, this.streamFunctionProperties));
 						}
 						((GenericApplicationContext) this.applicationContext).registerBean(functionDefinition + "_binding",
-							BindableFunctionProxyFactory.class, () -> proxyFactory.get());
+							BindableFunctionProxyFactory.class, proxyFactory::get);
 					}
 					else {
 						logger.warn("The function definition '" + streamFunctionProperties.getDefinition() +

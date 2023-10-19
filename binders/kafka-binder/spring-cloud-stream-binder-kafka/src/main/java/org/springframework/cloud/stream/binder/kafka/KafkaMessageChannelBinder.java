@@ -442,7 +442,7 @@ public class KafkaMessageChannelBinder extends
 			producerProperties.setPartitionCount(partitions.size());
 			List<ChannelInterceptor> interceptors = ((InterceptableChannel) channel)
 					.getInterceptors();
-			interceptors.forEach((interceptor) -> {
+			interceptors.forEach(interceptor -> {
 				if (interceptor instanceof PartitioningInterceptor partitioningInterceptor) {
 					partitioningInterceptor.setPartitionCount(partitions.size());
 				}
@@ -953,7 +953,7 @@ public class KafkaMessageChannelBinder extends
 									return shouldSeek;
 								})
 								.collect(Collectors.toList());
-							if (toSeek.size() > 0) {
+							if (!toSeek.isEmpty()) {
 								if ("earliest".equals(resetTo)) {
 									consumer.seekToBeginning(toSeek);
 								}
@@ -1162,7 +1162,7 @@ public class KafkaMessageChannelBinder extends
 			@SuppressWarnings("rawtypes")
 			DlqSender<?, ?> dlqSender = new DlqSender(kafkaTemplate, sendTimeout);
 
-			return (message) -> {
+			return message -> {
 				List<ConsumerRecord<Object, Object>> records;
 				if (!properties.isBatchMode()) {
 					ConsumerRecord<Object, Object> record = StaticMessageHeaderAccessor.getSourceData(message);
@@ -1368,7 +1368,7 @@ public class KafkaMessageChannelBinder extends
 		}
 		final MessageHandler superHandler = super.getErrorMessageHandler(destination,
 				group, properties);
-		return (message) -> {
+		return message -> {
 			ConsumerRecord<?, ?> record = (ConsumerRecord<?, ?>) message.getHeaders()
 					.get(KafkaHeaders.RAW_DATA);
 			if (!(message instanceof ErrorMessage)) {
@@ -1509,7 +1509,7 @@ public class KafkaMessageChannelBinder extends
 
 		private final ProducerFactory<byte[], byte[]> producerFactory;
 
-		PartitionHandler kafkaPartitionHandler = null;
+		PartitionHandler kafkaPartitionHandler;
 
 		private String topic;
 

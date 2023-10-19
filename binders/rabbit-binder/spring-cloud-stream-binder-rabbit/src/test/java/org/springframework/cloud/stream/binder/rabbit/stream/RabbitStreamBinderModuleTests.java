@@ -75,7 +75,7 @@ public class RabbitStreamBinderModuleTests {
 			RabbitConsumerProperties rProps = new RabbitConsumerProperties();
 			rProps.setContainerType(ContainerType.STREAM);
 			ExtendedConsumerProperties<RabbitConsumerProperties> props =
-					new ExtendedConsumerProperties<RabbitConsumerProperties>(rProps);
+					new ExtendedConsumerProperties<>(rProps);
 			props.setAutoStartup(false);
 			Binding<MessageChannel> binding = rabbitBinder.bindConsumer("testStream", "grp", new QueueChannel(), props);
 			Object container = TestUtils.getPropertyValue(binding, "lifecycle.messageListenerContainer");
@@ -98,7 +98,7 @@ public class RabbitStreamBinderModuleTests {
 			rProps.setContainerType(ContainerType.STREAM);
 			rProps.setSuperStream(true);
 			ExtendedConsumerProperties<RabbitConsumerProperties> props =
-					new ExtendedConsumerProperties<RabbitConsumerProperties>(rProps);
+					new ExtendedConsumerProperties<>(rProps);
 			props.setAutoStartup(false);
 			props.setInstanceCount(1);
 			Binding<MessageChannel> binding = rabbitBinder.bindConsumer("testSuperStream", "grp", new QueueChannel(), props);
@@ -124,7 +124,7 @@ public class RabbitStreamBinderModuleTests {
 			RabbitProducerProperties rProps = new RabbitProducerProperties();
 			rProps.setProducerType(ProducerType.STREAM_SYNC);
 			ExtendedProducerProperties<RabbitProducerProperties> props =
-					new ExtendedProducerProperties<RabbitProducerProperties>(rProps);
+					new ExtendedProducerProperties<>(rProps);
 			Binding<MessageChannel> binding = rabbitBinder.bindProducer("testStream", new DirectChannel(), props);
 			Object handler = TestUtils.getPropertyValue(binding, "val$producerMessageHandler");
 			assertThat(handler).isInstanceOf(RabbitStreamMessageHandler.class);

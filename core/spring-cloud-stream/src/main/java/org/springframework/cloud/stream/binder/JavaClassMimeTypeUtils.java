@@ -32,7 +32,7 @@ import org.springframework.util.MimeTypeUtils;
  */
 public abstract class JavaClassMimeTypeUtils {
 
-	private static ConcurrentMap<String, MimeType> mimeTypesCache = new ConcurrentHashMap<>();
+	private static final ConcurrentMap<String, MimeType> mimeTypesCache = new ConcurrentHashMap<>();
 
 	/**
 	 * Convert payload to {@link MimeType} based on the content type on the message.

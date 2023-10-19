@@ -18,6 +18,7 @@ package org.springframework.cloud.stream.binder.kafka.streams;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.logging.Log;
@@ -93,8 +94,8 @@ public class KafkaStreamsMessageConversionDelegate {
 		final PerRecordContentTypeHolder perRecordContentTypeHolder = new PerRecordContentTypeHolder();
 
 		final KStream<?, ?> kStreamWithEnrichedHeaders = outboundBindTarget
-			.filter((k, v) -> v != null)
-			.mapValues((v) -> {
+			.filter(Objects::nonNull)
+			.mapValues(v -> {
 				Message<?> message = v instanceof Message<?> m ? m
 						: MessageBuilder.withPayload(v).build();
 				Map<String, Object> headers = new HashMap<>(message.getHeaders());
@@ -218,7 +219,7 @@ public class KafkaStreamsMessageConversionDelegate {
 
 		// first branch above is the branch where the messages are converted, let it go
 		// through further processing.
-		return branch[0].mapValues((o2) -> {
+		return branch[0].mapValues(o2 -> {
 			Object objectValue = keyValueThreadLocal.get().value;
 			keyValueThreadLocal.remove();
 			return objectValue;

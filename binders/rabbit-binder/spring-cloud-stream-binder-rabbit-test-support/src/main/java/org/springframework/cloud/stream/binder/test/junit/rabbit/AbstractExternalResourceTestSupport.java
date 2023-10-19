@@ -49,7 +49,7 @@ public abstract class AbstractExternalResourceTestSupport<R> implements BeforeEa
 
 	protected R resource;
 
-	private String resourceDescription;
+	private final String resourceDescription;
 
 	protected AbstractExternalResourceTestSupport(String resourceDescription) {
 		Assert.hasText(resourceDescription, "resourceDescription is required");
